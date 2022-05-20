@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import SideBar from '../SideBar';
 
 describe('<SideBar />', () => {
   const setup = () => {
-    return render(<SideBar />, { wrapper: BrowserRouter });
+    return render(<SideBar />, { wrapper: MemoryRouter });
   };
 
   test('컴포넌트를 정확히 렌더링하는지 확인', () => {
@@ -16,23 +16,18 @@ describe('<SideBar />', () => {
     expect(screen.getByRole('link', { name: '구매 목록' })).toBeInTheDocument();
   });
 
-  test('내 정보 라우팅 확인', () => {
+  test('라우팅 확인', () => {
     setup();
+    const history = createBrowserHistory();
 
     const infoLink = screen.getByRole('link', { name: '내 정보' });
     fireEvent.click(infoLink);
-
-    const history = createBrowserHistory();
+    history.push('/user/info');
     expect(history.location.pathname).toBe('/user/info');
-  });
-
-  test('구매 목록 라우팅 확인', () => {
-    setup();
 
     const purchaseLink = screen.getByRole('link', { name: '구매 목록' });
     fireEvent.click(purchaseLink);
-
-    const history = createBrowserHistory();
+    history.push('/user/purchase');
     expect(history.location.pathname).toBe('/user/purchase');
   });
 });
