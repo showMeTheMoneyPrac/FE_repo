@@ -34,6 +34,9 @@ const HeaderWrapper = styled.header`
   display: flex;
   flex-direction: column;
   box-shadow: 0px 4px 4px rgba(26, 31, 22, 0.15);
+  background-color: #fff;
+  position: fixed;
+  top: 0;
 `;
 
 const TopWrapper = styled.div`
