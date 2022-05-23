@@ -31,6 +31,7 @@ const Header = () => {
 
 const HeaderWrapper = styled.header`
   width: 100%;
+  height: 150px;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 4px 4px rgba(26, 31, 22, 0.15);
