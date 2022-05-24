@@ -1,9 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { openMemberModal } from 'redux/modules/modal';
 import SearchBar from './SearchBar';
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const handleLoginModalVisible = () => {
+    dispatch(openMemberModal({ modal: 'loginModal' }));
+  };
+
   return (
     <HeaderWrapper>
       <TopWrapper>
@@ -13,7 +22,7 @@ const Header = () => {
         <nav>
           <HeaderNavList>
             <li>
-              <button>로그인</button>
+              <button onClick={handleLoginModalVisible}>로그인</button>
             </li>
             <li>
               <Link to="/user">마이페이지</Link>
