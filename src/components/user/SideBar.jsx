@@ -36,7 +36,7 @@ const SideNav = styled.nav`
   background-color: #fff;
   padding: 6rem 3rem;
   .nav-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: bold;
   }
   .nav-list {
@@ -49,7 +49,7 @@ const SideNav = styled.nav`
 
 const StyledLink = styled(Link)`
   display: block;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: ${(props) => (props.$current ? 'bold' : 'normal')};
 `;
 

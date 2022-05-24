@@ -43,9 +43,11 @@ const UserInfoWrapper = styled.div`
   flex: 1;
   padding: 6rem;
   .user-info-title {
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: bold;
+    padding-bottom: 2rem;
     margin-bottom: 2rem;
+    border-bottom: 3px solid #000;
   }
   .info-container {
     padding: 2rem 0;
@@ -63,6 +65,7 @@ const UserInfoWrapper = styled.div`
   .info-btn {
     display: inline-flex;
     background-color: #222;
+    font-size: 1.4rem;
     color: #fff;
     padding: 0.6rem 1.2rem;
     border-radius: 0.8rem;
