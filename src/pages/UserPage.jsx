@@ -1,10 +1,12 @@
-import UserTemplate from 'components/user/UserTemplate';
 import React from 'react';
+
+import Header from 'components/common/Header';
+import UserTemplate from 'components/user/UserTemplate';
 
 const UserPage = () => {
   return (
     <>
-      {/* 헤더 영역 */}
+      <Header />
       <UserTemplate />
     </>
   );
