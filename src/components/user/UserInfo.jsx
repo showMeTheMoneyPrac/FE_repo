@@ -46,6 +46,7 @@ const UserInfoWrapper = styled.div`
     font-size: 2.4rem;
     font-weight: bold;
     padding-bottom: 2rem;
+    margin-bottom: 2rem;
     border-bottom: 3px solid #000;
   }
   .info-container {
