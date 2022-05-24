@@ -65,6 +65,7 @@ const UserInfoWrapper = styled.div`
   .info-btn {
     display: inline-flex;
     background-color: #222;
+    font-size: 1.4rem;
     color: #fff;
     padding: 0.6rem 1.2rem;
     border-radius: 0.8rem;
