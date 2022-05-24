@@ -34,7 +34,7 @@ const SideBar = () => {
 
 const SideNav = styled.nav`
   background-color: #fff;
-  padding: 3rem 3rem 0 3rem;
+  padding: 6rem 3rem;
   .nav-title {
     font-size: 2rem;
     font-weight: bold;
