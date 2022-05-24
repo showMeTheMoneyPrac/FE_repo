@@ -29,7 +29,6 @@ const Spacer = styled.div`
 const UserWrapper = styled.div`
   height: 100%;
   display: flex;
-  background-color: skyblue;
 `;
 
 export default UserTemplate;

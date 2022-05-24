@@ -1,28 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { fetchUserInfo } from 'api/user';
+
 const UserInfo = () => {
-  const userInfo = {
-    nickname: '동찬',
-    cash: 10000,
-    address: '서울시 관악구 남현동',
-  };
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await fetchUserInfo();
+      setUserInfo(data);
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <UserInfoWrapper>
       <h3 className="user-info-title">내 정보</h3>
       <div className="info-container">
         <h4 className="info-title">닉네임</h4>
-        <p className="info-content">{userInfo.nickname}</p>
+        <p className="info-content">{userInfo?.nickname}</p>
         <button className="info-btn">닉네임 수정</button>
       </div>
       <div className="info-container">
         <h4 className="info-title">잔여 포인트</h4>
-        <p className="info-content">{userInfo.cash}</p>
+        <p className="info-content">{userInfo?.cash}</p>
         <button className="info-btn">포인트 충전</button>
       </div>
       <div className="info-container">
         <h4 className="info-title">주소</h4>
-        <p className="info-content">{userInfo.address}</p>
+        <p className="info-content">{userInfo?.address}</p>
         <button className="info-btn">주소 수정</button>
       </div>
     </UserInfoWrapper>
@@ -33,23 +41,24 @@ const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 3rem 6rem;
+  padding: 6rem;
   .user-info-title {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
   .info-container {
-    margin-bottom: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid #dedede;
   }
   .info-title {
     margin-bottom: 1rem;
     font-size: 1.4rem;
-    color: #ccc;
+    color: #8e8e8e;
   }
   .info-content {
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
   }
   .info-btn {
     display: inline-flex;
