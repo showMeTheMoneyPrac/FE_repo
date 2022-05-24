@@ -49,7 +49,7 @@ const SideNav = styled.nav`
 
 const StyledLink = styled(Link)`
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: ${(props) => (props.$current ? 'bold' : 'normal')};
 `;
 
