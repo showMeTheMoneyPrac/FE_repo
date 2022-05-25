@@ -7,3 +7,7 @@ export const fetchUserInfo = () => {
     },
   });
 };
+
+export const registUser = (payload) => {
+  return client.post('/members/regist', payload);
+};
