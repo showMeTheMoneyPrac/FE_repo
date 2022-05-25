@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-import { updateUserInfo, fetchUserInfo } from 'api/user';
+import { updateUserInfo, fetchUserInfo, deleteAccount } from 'api/user';
 import useToggle from 'hooks/useToggle';
 import useInput from 'hooks/useInput';
 
 const UserInfo = () => {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const { changeInfo, setChangeInfo, handleChangeInfo } = useInput({
     nickname: '',
@@ -14,17 +16,20 @@ const UserInfo = () => {
     detailAddress: '',
   });
   const { infoToggleState, handleToggleState } = useToggle();
+  const isLoggedIn = localStorage.getItem('nickname');
 
   useEffect(() => {
     const fetchUser = async () => {
       const { data } = await fetchUserInfo();
       setUserInfo(data);
     };
-
-    fetchUser();
+    if (isLoggedIn) {
+      fetchUser();
+    }
   }, []);
 
-  const handleSearchAddress = (e) => {
+  const handleSearchAddress = () => {
+    setChangeInfo((prev) => ({ ...prev, address: '' }));
     new window.daum.Postcode({
       oncomplete: function (data) {
         if (data.userSelectedType === 'R') {
@@ -45,14 +50,15 @@ const UserInfo = () => {
     e.preventDefault();
 
     try {
-      await updateUserInfo(
+      const { data } = await updateUserInfo(
         {
           beforeNickname: userInfo.nickname,
           afterNickname: changeInfo.nickname,
         },
         'nickname',
       );
-
+      localStorage.setItem('nickname', data.afterNickname);
+      setUserInfo((prev) => ({ ...prev, nickname: data.afterNickname }));
       handleToggleState(e);
     } catch (e) {
       console.log(e);
@@ -62,14 +68,14 @@ const UserInfo = () => {
   const handleSubmitCash = async (e) => {
     e.preventDefault();
     try {
-      await updateUserInfo(
+      const { data } = await updateUserInfo(
         {
           leftCash: userInfo.cash,
           chargeCash: changeInfo.cash,
         },
         'cash',
       );
-
+      setUserInfo((prev) => ({ ...prev, cash: data.totalCash }));
       handleToggleState(e);
     } catch (e) {
       console.log(e);
@@ -79,15 +85,25 @@ const UserInfo = () => {
   const handleSubmitAddress = async (e) => {
     e.preventDefault();
     try {
-      await updateUserInfo(
+      const { data } = await updateUserInfo(
         {
           beforeAddress: userInfo.address,
           afterAddress: `${changeInfo.address} ${changeInfo.detailAddress}`,
         },
         'address',
       );
-
+      setUserInfo((prev) => ({ ...prev, address: data.afterAddress }));
       handleToggleState(e);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount();
+      localStorage.clear();
+      navigate('/');
     } catch (e) {
       console.log(e);
     }
@@ -198,6 +214,11 @@ const UserInfo = () => {
           </InfoChangeForm>
         )}
       </InfoWrapper>
+      <DeleteBtnWrapper>
+        <button onClick={handleDeleteAccount} className="delete-btn">
+          회원 탈퇴
+        </button>
+      </DeleteBtnWrapper>
     </UserInfoWrapper>
   );
 };
@@ -280,6 +301,17 @@ const ActionBtnWrapper = styled.div`
     color: #fff;
     padding: 0.8rem 1.5rem;
     border-radius: 0.8rem;
+  }
+`;
+
+const DeleteBtnWrapper = styled.div`
+  margin-top: 3.8rem;
+  .delete-btn {
+    font-size: 1.2rem;
+    color: #8e8e8e;
+    letter-spacing: -0.1rem;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid #8e8e8e;
   }
 `;
 
