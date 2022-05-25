@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { fetchUserInfo } from 'api/user';
+import { updateUserInfo, fetchUserInfo } from 'api/user';
 import useToggle from 'hooks/useToggle';
+import useInput from 'hooks/useInput';
 
 const UserInfo = () => {
   const [userInfo, setUserInfo] = useState(null);
+  const { changeInfo, setChangeInfo, handleChangeInfo } = useInput({
+    nickname: '',
+    cash: '',
+    address: '',
+    detailAddress: '',
+  });
   const { infoToggleState, handleToggleState } = useToggle();
 
   useEffect(() => {
@@ -16,6 +23,75 @@ const UserInfo = () => {
 
     fetchUser();
   }, []);
+
+  const handleSearchAddress = (e) => {
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        if (data.userSelectedType === 'R') {
+          setChangeInfo((prev) => ({ ...prev, address: data.roadAddress }));
+        } else {
+          setChangeInfo((prev) => ({ ...prev, address: data.jibunAddress }));
+        }
+      },
+    }).open();
+  };
+
+  const handleChangeAddress = (e) => {
+    handleSearchAddress(e);
+    handleToggleState(e);
+  };
+
+  const handleSubmitNickname = async (e) => {
+    e.preventDefault();
+
+    try {
+      await updateUserInfo(
+        {
+          beforeNickname: userInfo.nickname,
+          afterNickname: changeInfo.nickname,
+        },
+        'nickname',
+      );
+
+      handleToggleState(e);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleSubmitCash = async (e) => {
+    e.preventDefault();
+    try {
+      await updateUserInfo(
+        {
+          leftCash: userInfo.cash,
+          chargeCash: changeInfo.cash,
+        },
+        'cash',
+      );
+
+      handleToggleState(e);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleSubmitAddress = async (e) => {
+    e.preventDefault();
+    try {
+      await updateUserInfo(
+        {
+          beforeAddress: userInfo.address,
+          afterAddress: `${changeInfo.address} ${changeInfo.detailAddress}`,
+        },
+        'address',
+      );
+
+      handleToggleState(e);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <UserInfoWrapper>
@@ -32,9 +108,14 @@ const UserInfo = () => {
             닉네임 변경
           </button>
         ) : (
-          <InfoChangeForm>
+          <InfoChangeForm name="nickname" onSubmit={handleSubmitNickname}>
             <label htmlFor="userNickname">새로운 닉네임</label>
-            <input id="userNickname" type="text" />
+            <input
+              onChange={handleChangeInfo}
+              name="nickname"
+              id="userNickname"
+              type="text"
+            />
             <ActionBtnWrapper>
               <button className="submit-btn">저장</button>
               <button
@@ -56,9 +137,14 @@ const UserInfo = () => {
             포인트 충전
           </button>
         ) : (
-          <InfoChangeForm>
+          <InfoChangeForm onSubmit={handleSubmitCash} name="cash">
             <label htmlFor="userCash">충전할 포인트</label>
-            <input id="userCash" type="text" />
+            <input
+              onChange={handleChangeInfo}
+              name="cash"
+              id="userCash"
+              type="text"
+            />
             <ActionBtnWrapper>
               <button className="submit-btn">저장</button>
               <button
@@ -72,10 +158,45 @@ const UserInfo = () => {
           </InfoChangeForm>
         )}
       </InfoWrapper>
-      <InfoWrapper $isActive={true}>
+      <InfoWrapper $isActive={infoToggleState.address !== true}>
         <h4 className="info-title">주소</h4>
         <p className="info-content">{userInfo?.address}</p>
-        <button className="info-btn">주소 변경</button>
+        {!infoToggleState.address ? (
+          <button
+            onClick={handleChangeAddress}
+            name="address"
+            className="info-btn"
+          >
+            주소 변경
+          </button>
+        ) : (
+          <InfoChangeForm onSubmit={handleSubmitAddress} name="address">
+            <label htmlFor="userAddress">변경할 주소</label>
+            <input
+              value={changeInfo.address}
+              readOnly
+              id="userAddress"
+              type="text"
+            />
+            <label htmlFor="userDetailAddress">상세 주소</label>
+            <input
+              onChange={handleChangeInfo}
+              name="detailAddress"
+              id="userDetailAddress"
+              type="text"
+            />
+            <ActionBtnWrapper>
+              <button className="submit-btn">저장</button>
+              <button
+                onClick={handleToggleState}
+                name="address"
+                className="cancel-btn"
+              >
+                취소
+              </button>
+            </ActionBtnWrapper>
+          </InfoChangeForm>
+        )}
       </InfoWrapper>
     </UserInfoWrapper>
   );
@@ -134,6 +255,9 @@ const InfoChangeForm = styled.form`
     border-bottom: 1px solid #dedede;
     &:focus {
       border-bottom: 1px solid #000;
+    }
+    &[id='userAddress'] {
+      margin-bottom: 2rem;
     }
   }
 `;
