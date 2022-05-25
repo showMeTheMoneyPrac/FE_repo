@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const LabelInput = ({
   inputId,
   inputType,
-  InputPlaceholder,
+  inputPlaceholder,
   labelText,
   readOnly,
 }) => {
@@ -17,7 +17,7 @@ const LabelInput = ({
         className="input-wrapper"
         type={inputType}
         id={inputId}
-        placeholder={InputPlaceholder}
+        placeholder={inputPlaceholder}
         readOnly={readOnly}
       />
     </LabelInputWrapper>
