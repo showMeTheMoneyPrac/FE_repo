@@ -1,40 +1,46 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { openMemberModal } from 'redux/modules/modal';
 import SearchBar from './SearchBar';
+import MemberModal from 'components/modal/MemberModal';
 
 const Header = () => {
   const dispatch = useDispatch();
+
+  const memberModal = useSelector(({ modal }) => modal.memberModal.isOpen);
 
   const handleLoginModalVisible = () => {
     dispatch(openMemberModal({ modal: 'loginModal' }));
   };
 
   return (
-    <HeaderWrapper>
-      <TopWrapper>
-        <Logo>
-          <Link to="/">C#</Link>
-        </Logo>
-        <nav>
-          <HeaderNavList>
-            <li>
-              <button onClick={handleLoginModalVisible}>로그인</button>
-            </li>
-            <li>
-              <Link to="/user">마이페이지</Link>
-            </li>
-            <li>
-              <Link to="/bucket">장바구니</Link>
-            </li>
-          </HeaderNavList>
-        </nav>
-      </TopWrapper>
-      <SearchBar />
-    </HeaderWrapper>
+    <>
+      <HeaderWrapper>
+        <TopWrapper>
+          <Logo>
+            <Link to="/">C#</Link>
+          </Logo>
+          <nav>
+            <HeaderNavList>
+              <li>
+                <button onClick={handleLoginModalVisible}>로그인</button>
+              </li>
+              <li>
+                <Link to="/user">마이페이지</Link>
+              </li>
+              <li>
+                <Link to="/bucket">장바구니</Link>
+              </li>
+            </HeaderNavList>
+          </nav>
+        </TopWrapper>
+        <SearchBar />
+      </HeaderWrapper>
+      {memberModal && <MemberModal />}
+    </>
   );
 };
 
