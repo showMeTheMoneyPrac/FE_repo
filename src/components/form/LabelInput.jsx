@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { changeFormInput } from 'redux/modules/form';
 import styled from 'styled-components';
 
 const LabelInput = ({
@@ -8,7 +10,14 @@ const LabelInput = ({
   labelText,
   readOnly,
   value,
+  form,
 }) => {
+  const dispatch = useDispatch();
+
+  const handleChnageValue = (e) => {
+    dispatch(changeFormInput({ form, target: inputId, value: e.target.value }));
+  };
+
   return (
     <LabelInputWrapper>
       <label className="input-label" htmlFor={inputId}>
@@ -21,6 +30,7 @@ const LabelInput = ({
         placeholder={inputPlaceholder}
         readOnly={readOnly}
         value={value}
+        onChange={handleChnageValue}
       />
     </LabelInputWrapper>
   );
