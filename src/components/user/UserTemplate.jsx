@@ -17,7 +17,7 @@ const UserTemplate = () => {
 };
 
 const Spacer = styled.div`
-  min-height: 152px;
+  min-height: 150px;
 `;
 
 const UserWrapper = styled.div`
