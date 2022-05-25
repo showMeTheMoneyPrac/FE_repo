@@ -7,6 +7,7 @@ const LabelInput = ({
   inputPlaceholder,
   labelText,
   readOnly,
+  value,
 }) => {
   return (
     <LabelInputWrapper>
@@ -19,6 +20,7 @@ const LabelInput = ({
         id={inputId}
         placeholder={inputPlaceholder}
         readOnly={readOnly}
+        value={value}
       />
     </LabelInputWrapper>
   );
