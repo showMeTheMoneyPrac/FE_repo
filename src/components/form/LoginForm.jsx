@@ -17,7 +17,6 @@ const LoginForm = () => {
       email: loginForm.email,
       password: loginForm.password,
     };
-    console.log(loginForm);
 
     const res = await loginUser(loginPayload);
 
