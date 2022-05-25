@@ -76,7 +76,7 @@ const ProductInfo = styled.div`
 const ActionButtonWrapper = styled.div`
   position: absolute;
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   right: 0;
   bottom: 0;
   .refund-btn,
@@ -84,7 +84,7 @@ const ActionButtonWrapper = styled.div`
     font-size: 1.4rem;
     background-color: #222;
     color: #fff;
-    padding: 0.6rem 1.2rem;
+    padding: 0.8rem 1.5rem;
     border-radius: 0.8rem;
   }
 `;
