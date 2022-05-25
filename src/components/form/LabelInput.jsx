@@ -4,9 +4,10 @@ import styled from 'styled-components';
 const LabelInput = ({
   inputId,
   inputType,
-  InputPlaceholder,
+  inputPlaceholder,
   labelText,
   readOnly,
+  value,
 }) => {
   return (
     <LabelInputWrapper>
@@ -17,8 +18,9 @@ const LabelInput = ({
         className="input-wrapper"
         type={inputType}
         id={inputId}
-        placeholder={InputPlaceholder}
+        placeholder={inputPlaceholder}
         readOnly={readOnly}
+        value={value}
       />
     </LabelInputWrapper>
   );

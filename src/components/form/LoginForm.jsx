@@ -10,13 +10,13 @@ const LoginForm = () => {
         inputId="memberId"
         inputType="text"
         labelText="아이디"
-        InputPlaceholder="아이디를 입력하세요."
+        inputPlaceholder="아이디를 입력하세요."
       />
       <LabelInput
         inputId="memberPw"
         inputType="password"
         labelText="비밀번호"
-        InputPlaceholder="비밀번호를 입력하세요."
+        inputPlaceholder="비밀번호를 입력하세요."
       />
       <button className="submit-btn">로그인</button>
     </LoginFormWrapper>
