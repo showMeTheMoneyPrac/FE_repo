@@ -4,6 +4,7 @@ const useToggle = () => {
   const [infoToggleState, setInfoToggleState] = useState({
     nickname: false,
     cash: false,
+    address: false,
   });
 
   const handleToggleState = useCallback((e) => {
