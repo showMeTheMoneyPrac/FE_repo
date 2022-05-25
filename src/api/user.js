@@ -11,3 +11,11 @@ export const fetchUserInfo = () => {
 export const registUser = (payload) => {
   return client.post('/members/regist', payload);
 };
+
+export const updateUserInfo = (payload, target) => {
+  return client.patch(`/members/${target}`, payload, {
+    headers: {
+      nickname: 'test',
+    },
+  });
+};
