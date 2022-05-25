@@ -9,6 +9,10 @@ const initialState = {
     password: '',
     passwordCheck: '',
   },
+  loginForm: {
+    email: '',
+    password: '',
+  },
 };
 
 const formSlice = createSlice({
@@ -19,17 +23,13 @@ const formSlice = createSlice({
     changeRegistFormAddress(state, { payload: baseAddress }) {
       state.registForm.baseAddress = baseAddress;
     },
-    changeRegistForm(state, { payload }) {
-      state.registForm.email = payload.email;
-      state.registForm.nickname = payload.nickname;
-      state.registForm.password = payload.password;
-      state.registForm.passwordCheck = payload.passwordCheck;
-      state.registForm.detailAddress = payload.detailAddress;
+    changeFormInput(state, { payload }) {
+      state[payload.form][payload.target] = payload.value;
     },
   },
 });
 
-export const { initializeForm, changeRegistFormAddress, changeRegistForm } =
+export const { initializeForm, changeRegistFormAddress, changeFormInput } =
   formSlice.actions;
 
 export default formSlice.reducer;

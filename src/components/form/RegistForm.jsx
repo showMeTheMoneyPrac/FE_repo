@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 import LabelInput from 'components/form/LabelInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeRegistForm, changeRegistFormAddress } from 'redux/modules/form';
+import { changeRegistFormAddress, initializeForm } from 'redux/modules/form';
 import { registUser } from 'api/user';
+import { openMemberModal } from 'redux/modules/modal';
 
 const RegistForm = () => {
   const dispatch = useDispatch();
@@ -13,22 +14,10 @@ const RegistForm = () => {
 
   const handleRegist = async (e) => {
     e.preventDefault();
-    const inputTarget = e.target;
-
-    const payload = {
-      email: inputTarget[0].value,
-      nickname: inputTarget[1].value,
-      password: inputTarget[2].value,
-      passwordCheck: inputTarget[3].value,
-      baseAddress: inputTarget[4].value,
-      detailAddress: inputTarget[6].value,
-    };
-    await dispatch(changeRegistForm(payload));
-
     const registPayload = {
       email: registForm.email,
       nickname: registForm.nickname,
-      address: registForm.baseAddress + registForm.detailAddress,
+      address: `${registForm.baseAddress} ${registForm.detailAddress}`,
       password: registForm.password,
       passwordCheck: registForm.passwordCheck,
     };
@@ -36,28 +25,22 @@ const RegistForm = () => {
     const res = await registUser(registPayload);
 
     console.log(res);
+    dispatch(initializeForm());
+    dispatch(openMemberModal({ modal: 'loginModal' }));
   };
 
   const handleSearchAddress = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성
-
-        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-
         //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
         if (data.userSelectedType === 'R') {
           // 사용자가 도로명 주소를 선택했을 경우
-          // setAddress(data.roadAddress);
           dispatch(changeRegistFormAddress(data.roadAddress));
         } else {
           // 사용자가 지번 주소를 선택했을 경우(J)
-          // setAddress(data.jibunAddress);
           dispatch(changeRegistFormAddress(data.jibunAddress));
         }
-        // setAddress(addr);
-        // 커서를 상세주소 필드로 이동한다.
-        // document.getElementById('memberDetailAddress').focus();
       },
     }).open();
   };
@@ -69,24 +52,28 @@ const RegistForm = () => {
         inputType="text"
         labelText="아이디"
         inputPlaceholder="이메일 형식의 아이디를 입력하세요."
+        form="registForm"
       />
       <LabelInput
         inputId="nickname"
         inputType="text"
         labelText="닉네임"
         inputPlaceholder="닉네임을 입력하세요."
+        form="registForm"
       />
       <LabelInput
         inputId="password"
         inputType="password"
         labelText="비밀번호"
         inputPlaceholder="비밀번호를 입력하세요."
+        form="registForm"
       />
       <LabelInput
         inputId="passwordCheck"
         inputType="password"
         labelText="비밀번호 확인"
         inputPlaceholder="비밀번호를 한번더 입력해주세요."
+        form="registForm"
       />
       <SearchAddressWrapper>
         <LabelInput
@@ -109,6 +96,7 @@ const RegistForm = () => {
         inputType="text"
         labelText="상세 주소"
         inputPlaceholder="상세주소를 입력해주세요."
+        form="registForm"
       />
       <button className="submit-btn">회원가입</button>
     </RegistFormWrapper>
