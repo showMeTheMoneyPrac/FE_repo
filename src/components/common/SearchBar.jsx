@@ -5,7 +5,7 @@ const SearchBar = () => {
   return (
     <SearchForm>
       <InputWrapper>
-        <label className="a11y-hidden" for="search">
+        <label className="a11y-hidden" htmlFor="search">
           search
         </label>
         <input type="text" id="search" placeholder="상품명을 입력하세요." />
@@ -30,7 +30,7 @@ const InputWrapper = styled.div`
     box-shadow: 0px 4px 16px rgba(26, 31, 22, 0.15);
     border-radius: 1rem;
     ::placeholder {
-      padding: 2rem;
+      padding: 1rem;
     }
   }
 `;
