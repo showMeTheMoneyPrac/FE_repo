@@ -3,15 +3,19 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ProductNav = () => {
-  const { pathname } = useLocation();
-
+  const { search, pathname } = useLocation();
   return (
     <ProductNavWrapper>
       <h2 className="nav-title">카테고리</h2>
       <ul className="nav-list">
         <li>
+          <StyledLink $current={pathname === '/'} className="info-link" to="/">
+            전체
+          </StyledLink>
+        </li>
+        <li>
           <StyledLink
-            $current={pathname === '/product?category=top'}
+            $current={search === '?category=top'}
             className="info-link"
             to="/product?category=top"
           >
@@ -20,7 +24,7 @@ const ProductNav = () => {
         </li>
         <li>
           <StyledLink
-            $current={pathname === '/product?category=bottom'}
+            $current={search === '?category=bottom'}
             className="purchase-link"
             to="/product?category=bottom"
           >
@@ -29,7 +33,7 @@ const ProductNav = () => {
         </li>
         <li>
           <StyledLink
-            $current={pathname === '/product?category=shoes'}
+            $current={search === '?category=shoes'}
             className="purchase-link"
             to="/product?category=shoes"
           >
@@ -38,7 +42,7 @@ const ProductNav = () => {
         </li>
         <li>
           <StyledLink
-            $current={pathname === '/product?category=accessary'}
+            $current={search === '?category=accessary'}
             className="purchase-link"
             to="/product?category=accessary"
           >
