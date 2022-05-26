@@ -19,14 +19,14 @@ const UserInfo = () => {
   const isLoggedIn = localStorage.getItem('nickname');
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const handleFetchUserInfo = async () => {
       const { data } = await fetchUserInfo();
       setUserInfo(data);
     };
     if (isLoggedIn) {
-      fetchUser();
+      handleFetchUserInfo();
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleSearchAddress = () => {
     setChangeInfo((prev) => ({ ...prev, address: '' }));
@@ -187,7 +187,7 @@ const UserInfo = () => {
           </button>
         ) : (
           <InfoChangeForm onSubmit={handleSubmitAddress} name="address">
-            <label htmlFor="userAddress">변경할 주소</label>
+            <label htmlFor="userAddress">변경 주소</label>
             <input
               value={changeInfo.address}
               readOnly
@@ -215,10 +215,19 @@ const UserInfo = () => {
         )}
       </InfoWrapper>
       <DeleteBtnWrapper>
-        <button onClick={handleDeleteAccount} className="delete-btn">
+        <button
+          onClick={handleToggleState}
+          name="withdrawal"
+          className="delete-btn"
+        >
           회원 탈퇴
         </button>
       </DeleteBtnWrapper>
+      {infoToggleState.withdrawal && (
+        <WithdrawalTab>
+          <input className="" type="checkbox" />
+        </WithdrawalTab>
+      )}
     </UserInfoWrapper>
   );
 };
@@ -307,12 +316,14 @@ const ActionBtnWrapper = styled.div`
 const DeleteBtnWrapper = styled.div`
   margin-top: 3.8rem;
   .delete-btn {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #8e8e8e;
     letter-spacing: -0.1rem;
     padding: 0.2rem 0;
     border-bottom: 1px solid #8e8e8e;
   }
 `;
+
+const WithdrawalTab = styled.div``;
 
 export default UserInfo;
