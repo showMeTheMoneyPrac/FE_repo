@@ -307,7 +307,7 @@ const DeleteBtnWrapper = styled.div`
     color: #8e8e8e;
     letter-spacing: -0.1rem;
     padding: 0.2rem 0;
-    border-bottom: 1px solid #8e8e8e;
+    border-bottom: 1px solid #cecece;
   }
 `;
 
