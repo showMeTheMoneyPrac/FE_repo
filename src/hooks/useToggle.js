@@ -5,6 +5,7 @@ const useToggle = () => {
     nickname: false,
     cash: false,
     address: false,
+    withdrawal: false,
   });
 
   const handleToggleState = useCallback((e) => {
