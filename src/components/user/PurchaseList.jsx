@@ -3,9 +3,12 @@ import styled from 'styled-components';
 
 import PurchaseDetail from 'components/user/PurchaseDetail';
 import { fetchPurchaseList } from 'api/product';
+import { useSelector } from 'react-redux';
+import ReviewModal from 'components/modal/ReviewModal';
 
 const PurchaseList = () => {
   const [purchaseList, setPurchaseList] = useState(null);
+  const visible = useSelector(({ modal }) => modal.reviewModal);
 
   useEffect(() => {
     const handleFetchPurchaseList = async () => {
@@ -31,6 +34,7 @@ const PurchaseList = () => {
           </PurchaseItem>
         ))}
       </ul>
+      {visible && <ReviewModal />}
     </PurchaseListWrapper>
   );
 };
