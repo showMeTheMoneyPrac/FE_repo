@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
-import { updateUserInfo, fetchUserInfo, deleteAccount } from 'api/user';
+import { updateUserInfo, fetchUserInfo } from 'api/user';
 import useToggle from 'hooks/useToggle';
 import useInput from 'hooks/useInput';
+import WithdrawalForm from 'components/user/WithdrawalForm';
 
 const UserInfo = () => {
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const { changeInfo, setChangeInfo, handleChangeInfo } = useInput({
     nickname: '',
@@ -94,16 +93,6 @@ const UserInfo = () => {
       );
       setUserInfo((prev) => ({ ...prev, address: data.afterAddress }));
       handleToggleState(e);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleDeleteAccount = async () => {
-    try {
-      await deleteAccount();
-      localStorage.clear();
-      navigate('/');
     } catch (e) {
       console.log(e);
     }
@@ -224,9 +213,7 @@ const UserInfo = () => {
         </button>
       </DeleteBtnWrapper>
       {infoToggleState.withdrawal && (
-        <WithdrawalTab>
-          <input className="" type="checkbox" />
-        </WithdrawalTab>
+        <WithdrawalForm handleToggleState={handleToggleState} />
       )}
     </UserInfoWrapper>
   );
@@ -246,13 +233,13 @@ const UserInfoWrapper = styled.div`
   }
   .info-container {
     padding: 2rem 0;
-    border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid #cecece;
   }
 `;
 
 const InfoWrapper = styled.div`
   padding: 2rem 0;
-  border-bottom: ${(props) => props.$isActive && '1px solid #dedede'};
+  border-bottom: ${(props) => props.$isActive && '1px solid #cecece'};
   .info-title {
     margin-bottom: 1rem;
     font-size: 1.4rem;
@@ -282,7 +269,7 @@ const InfoChangeForm = styled.form`
   }
   > input {
     padding-bottom: 1rem;
-    border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid #cecece;
     &:focus {
       border-bottom: 1px solid #000;
     }
@@ -298,7 +285,7 @@ const ActionBtnWrapper = styled.div`
   justify-content: center;
   margin-top: 2rem;
   > .cancel-btn {
-    background-color: #dedede;
+    background-color: #cecece;
     font-size: 1.4rem;
     color: #fff;
     padding: 0.8rem 1.5rem;
@@ -314,7 +301,7 @@ const ActionBtnWrapper = styled.div`
 `;
 
 const DeleteBtnWrapper = styled.div`
-  margin-top: 3.8rem;
+  margin-top: 2.8rem;
   .delete-btn {
     font-size: 1.4rem;
     color: #8e8e8e;
@@ -323,7 +310,5 @@ const DeleteBtnWrapper = styled.div`
     border-bottom: 1px solid #8e8e8e;
   }
 `;
-
-const WithdrawalTab = styled.div``;
 
 export default UserInfo;

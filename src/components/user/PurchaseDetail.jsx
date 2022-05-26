@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { CheckCircleOutlined } from '@ant-design/icons';
+
+import StyledCheckbox from 'components/user/StyledCheckbox';
+import useSelect from 'hooks/useSelect';
 
 const PurchaseDetail = ({ detail }) => {
-  const [isSelected, setIsSelected] = useState(false);
+  const { isSelected, handleSelector } = useSelect();
 
-  const handleProductSelect = (e) => {
-    setIsSelected(e.target.checked);
-  };
   return (
     <PurchaseDetailWrapper>
       <label htmlFor={detail.orderDetailId}>
         <input
-          onChange={handleProductSelect}
+          onChange={handleSelector}
           id={detail.orderDetailId}
           className="a11y-hidden"
           type="checkbox"
         />
-        <StyledCheckbox className="selector" $isSelected={isSelected} />
+        <StyledCheckbox isSelected={isSelected} />
       </label>
       <PurchaseInfo>
         <img className="product-image" src={detail.firstImg} alt="product" />
@@ -58,13 +57,6 @@ const PurchaseDetailWrapper = styled.div`
     width: 2rem;
     height: 2rem;
   }
-`;
-
-const StyledCheckbox = styled(CheckCircleOutlined)`
-  font-size: 2rem;
-  color: ${(props) => (props.$isSelected ? '#02D6a8' : '#cecece')};
-  outline: none;
-  cursor: pointer;
 `;
 
 const PurchaseInfo = styled.div`
