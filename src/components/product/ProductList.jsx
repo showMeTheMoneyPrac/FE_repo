@@ -9,13 +9,31 @@ const ProductList = () => {
       <ProductItem />
       <ProductItem />
       <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
     </ProductListWrapper>
   );
 };
 
 const ProductListWrapper = styled.ul`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  gap: 2rem;
 `;
 
 export default ProductList;
