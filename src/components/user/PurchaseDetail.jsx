@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
 import StyledCheckbox from 'components/user/StyledCheckbox';
 import useSelect from 'hooks/useSelect';
+import { openReviewModal } from 'redux/modules/modal';
 
 const PurchaseDetail = ({ detail }) => {
+  const dispatch = useDispatch();
   const { isSelected, handleSelector } = useSelect();
+
+  const handleVisibleModal = () => {
+    dispatch(openReviewModal());
+  };
 
   return (
     <PurchaseDetailWrapper>
@@ -25,7 +32,7 @@ const PurchaseDetail = ({ detail }) => {
           <p className="product-option">{detail.ea}ea</p>
           <p className="product-price">{detail.price.toLocaleString()}원</p>
           <ReviewButtonWrapper>
-            <button className="review-btn">
+            <button onClick={handleVisibleModal} className="review-btn">
               {detail.review ? '리뷰 수정' : '리뷰 작성'}
             </button>
           </ReviewButtonWrapper>
