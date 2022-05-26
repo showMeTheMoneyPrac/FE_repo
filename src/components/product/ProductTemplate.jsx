@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import ProductList from './ProductList';
-import ProductNav from './ProductNav';
+
+import ProductList from 'components/product/ProductList';
+import ProductNav from 'components/product/ProductNav';
+import ProductSortNav from 'components/product/ProductSortNav';
 
 const ProductTemplate = () => {
   return (
@@ -9,7 +11,10 @@ const ProductTemplate = () => {
       <Spacer />
       <ProductWrapper>
         <ProductNav />
-        <ProductList />
+        <LeftWrapper>
+          <ProductSortNav />
+          <ProductList />
+        </LeftWrapper>
       </ProductWrapper>
       ;
     </>
@@ -22,6 +27,11 @@ const Spacer = styled.div`
 
 const ProductWrapper = styled.div`
   display: flex;
+`;
+
+const LeftWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export default ProductTemplate;
