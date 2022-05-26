@@ -35,6 +35,7 @@ const ModalOverlayWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 200;
 `;
 
 const ModalWrapper = styled.div`

@@ -16,7 +16,7 @@ const initialState = {
 };
 
 const formSlice = createSlice({
-  name: 'modal',
+  name: 'form',
   initialState,
   reducers: {
     initializeForm: () => initialState,
