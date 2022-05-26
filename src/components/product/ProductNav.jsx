@@ -55,7 +55,7 @@ const ProductNav = () => {
 };
 
 const ProductNavWrapper = styled.nav`
-  width: 20%;
+  width: 100%;
   background-color: #fff;
   padding: 6rem 3rem;
   .nav-title {

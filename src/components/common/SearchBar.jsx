@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SearchBar = () => {
+  const navigate = useNavigate();
+  const [searchKeyWord, setSearchKeyword] = useState('');
+
+  const handleChangeSearchKeyword = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleRouteSearchList = (e) => {
+    e.preventDefault();
+    navigate(`/product?search=${searchKeyWord}`);
+  };
+
   return (
-    <SearchForm>
+    <SearchForm onSubmit={handleRouteSearchList}>
       <InputWrapper>
         <label className="a11y-hidden" htmlFor="search">
           search
         </label>
-        <input type="text" id="search" placeholder="상품명을 입력하세요." />
+        <input
+          onChange={handleChangeSearchKeyword}
+          type="text"
+          id="search"
+          placeholder="상품명을 입력하세요."
+        />
       </InputWrapper>
     </SearchForm>
   );
