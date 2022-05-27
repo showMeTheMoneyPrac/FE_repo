@@ -1,56 +1,66 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import useSearchQuery from 'hooks/useSearchQuery';
+
 const ProductNav = () => {
-  const { search, pathname } = useLocation();
+  const category = useSearchQuery('category');
+  const search = useSearchQuery('search');
+
   return (
-    <ProductNavWrapper>
-      <h2 className="nav-title">카테고리</h2>
-      <ul className="nav-list">
-        <li>
-          <StyledLink $current={pathname === '/'} className="info-link" to="/">
-            전체
-          </StyledLink>
-        </li>
-        <li>
-          <StyledLink
-            $current={search === '?category=top'}
-            className="info-link"
-            to="/product?category=top"
-          >
-            상의
-          </StyledLink>
-        </li>
-        <li>
-          <StyledLink
-            $current={search === '?category=bottom'}
-            className="purchase-link"
-            to="/product?category=bottom"
-          >
-            하의
-          </StyledLink>
-        </li>
-        <li>
-          <StyledLink
-            $current={search === '?category=shoes'}
-            className="purchase-link"
-            to="/product?category=shoes"
-          >
-            신발
-          </StyledLink>
-        </li>
-        <li>
-          <StyledLink
-            $current={search === '?category=accessary'}
-            className="purchase-link"
-            to="/product?category=accessary"
-          >
-            악세사리
-          </StyledLink>
-        </li>
-      </ul>
-    </ProductNavWrapper>
+    <>
+      <ProductNavWrapper>
+        <h2 className="nav-title">카테고리</h2>
+        <ul className="nav-list">
+          <li>
+            <StyledLink $current={!category} className="info-link" to="/">
+              전체
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              $current={category === 'top'}
+              className="info-link"
+              to={`/product?category=top${search ? `&search=${search}` : ''}`}
+            >
+              상의
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              $current={category === 'bottom'}
+              className="purchase-link"
+              to={`/product?category=bottom${
+                search ? `&search=${search}` : ''
+              }`}
+            >
+              하의
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              $current={category === 'shoes'}
+              className="purchase-link"
+              to={`/product?category=shoes${search ? `&search=${search}` : ''}`}
+            >
+              신발
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink
+              $current={category === 'accessary'}
+              className="purchase-link"
+              to={`/product?category=accessary${
+                search ? `&search=${search}` : ''
+              }`}
+            >
+              악세사리
+            </StyledLink>
+          </li>
+        </ul>
+      </ProductNavWrapper>
+    </>
   );
 };
 
