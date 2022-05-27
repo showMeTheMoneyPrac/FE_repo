@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ModalOverlay from 'components/modal/ModalOverlay';
 import { closeModal } from 'redux/modules/modal';
-import { updateReview } from 'redux/modules/purchase';
+import { createReview, updateReview } from 'redux/modules/purchase';
 import useInput from 'hooks/useInput';
 
 const ReviewModal = () => {
@@ -34,7 +34,13 @@ const ReviewModal = () => {
         }),
       );
     } else {
-      // 리뷰 작성 코드
+      dispatch(
+        createReview({
+          id: orderDetailId,
+          reviewTitle: inputValue.reviewTitle,
+          content: inputValue.reviewContent,
+        }),
+      );
     }
   };
 

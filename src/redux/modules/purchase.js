@@ -12,6 +12,25 @@ const purchaseSlice = createSlice({
     initPurchaseListSuccess(state, { payload }) {
       state.purchaseList = payload.ordersList;
     },
+    createReview() {},
+    createReviewSuccess(state, { payload }) {
+      state.purchaseList = state.purchaseList.map((purchaseItem) => {
+        const newOrderDetailList = purchaseItem.ordersDetailList.map(
+          (orderDetail) =>
+            orderDetail.orderDetailId === payload.orderDetailId
+              ? {
+                  ...orderDetail,
+                  review: {
+                    id: payload.reviewId,
+                    title: payload.title,
+                    content: payload.content,
+                  },
+                }
+              : orderDetail,
+        );
+        return { ...purchaseItem, ordersDetailList: newOrderDetailList };
+      });
+    },
     updateReview() {},
     updateReviewSuccess(state, { payload }) {
       state.purchaseList = state.purchaseList.map((purchaseItem) => {
@@ -33,13 +52,29 @@ const purchaseSlice = createSlice({
         return { ...purchaseItem, ordersDetailList: newOrderDetailList };
       });
     },
+    deleteReview() {},
+    deleteReviewSuccess(state, { payload }) {
+      state.purchaseList = state.purchaseList.map((purchaseItem) => {
+        const newOrderDetailList = purchaseItem.ordersDetailList.map(
+          (orderDetail) =>
+            orderDetail.review?.id !== payload
+              ? orderDetail
+              : { ...orderDetail, review: null },
+        );
+        return { ...purchaseItem, ordersDetailList: newOrderDetailList };
+      });
+    },
   },
 });
 
 export const {
   initPurchaseList,
   initPurchaseListSuccess,
+  createReview,
+  createReviewSuccess,
   updateReview,
   updateReviewSuccess,
+  deleteReview,
+  deleteReviewSuccess,
 } = purchaseSlice.actions;
 export default purchaseSlice.reducer;
