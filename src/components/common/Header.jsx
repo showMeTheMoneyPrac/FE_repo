@@ -15,13 +15,19 @@ const Header = () => {
   const handleLoginModalVisible = () => {
     dispatch(openMemberModal({ modal: 'loginModal' }));
   };
-
   return (
     <>
       <HeaderWrapper>
         <TopWrapper>
           <Logo>
-            <Link to="/">C#</Link>
+            <Link
+              to="/"
+              onClick={() => {
+                window.onload();
+              }}
+            >
+              C#
+            </Link>
           </Logo>
           <nav>
             <HeaderNavList>
