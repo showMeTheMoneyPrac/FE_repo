@@ -1,26 +1,54 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ModalOverlay from 'components/modal/ModalOverlay';
 import { closeModal } from 'redux/modules/modal';
+import { updateReview } from 'redux/modules/purchase';
+import useInput from 'hooks/useInput';
 
 const ReviewModal = () => {
   const dispatch = useDispatch();
+  const { reviewId, orderDetailId } = useSelector(
+    ({ modal }) => modal.reviewModal,
+  );
+  const { inputValue, handleChangeInput } = useInput({
+    reviewTitle: '',
+    reviewContent: '',
+  });
 
   const handleCloseModal = () => {
     dispatch(closeModal());
   };
 
+  const handleUpdateReview = (e) => {
+    e.preventDefault();
+    if (!inputValue.reviewTitle || !inputValue.reviewContent) return;
+
+    if (reviewId) {
+      dispatch(
+        updateReview({
+          id: reviewId,
+          reviewTitle: inputValue.reviewTitle,
+          content: inputValue.reviewContent,
+        }),
+      );
+    } else {
+      // 리뷰 작성 코드
+    }
+  };
+
   return (
     <ModalOverlay>
       <Title>리뷰</Title>
-      <ReviewForm>
+      <ReviewForm onSubmit={handleUpdateReview}>
         <label className="review-label" htmlFor="reviewTitle">
           제목
         </label>
         <input
+          onChange={handleChangeInput}
           placeholder="리뷰 제목을 입력하세요."
+          name="reviewTitle"
           id="reviewTitle"
           className="title-input"
           type="text"
@@ -29,13 +57,17 @@ const ReviewModal = () => {
           내용
         </label>
         <textarea
+          onChange={handleChangeInput}
           placeholder="리뷰 내용을 입력하세요."
+          name="reviewContent"
           id="reviewContent"
           className="content-input"
           rows="5"
         />
         <ReviewActionButtonWrapper>
-          <button className="submit-btn">작성</button>
+          <button onClick={handleUpdateReview} className="submit-btn">
+            작성
+          </button>
           <button onClick={handleCloseModal} className="close-btn">
             취소
           </button>
