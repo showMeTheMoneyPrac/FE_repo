@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ReviewModal from 'components/modal/ReviewModal';
 import PurchaseDetail from 'components/user/PurchaseDetail';
-import { fetchPurchaseList } from 'api/purchse';
+import { initPurchaseList } from 'redux/modules/purchase';
 
 const PurchaseList = () => {
-  const [purchaseList, setPurchaseList] = useState(null);
+  const dispatch = useDispatch();
+  const purchaseList = useSelector(({ purchase }) => purchase.purchaseList);
   const { visible } = useSelector(({ modal }) => modal.reviewModal);
 
   useEffect(() => {
-    const handleFetchPurchaseList = async () => {
-      const { data } = await fetchPurchaseList();
-      setPurchaseList(data.ordersList);
-    };
-
-    handleFetchPurchaseList();
-  }, []);
+    dispatch(initPurchaseList());
+  }, [dispatch]);
 
   return (
     <PurchaseListWrapper>

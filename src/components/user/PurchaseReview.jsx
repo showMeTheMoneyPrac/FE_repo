@@ -1,7 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteReview } from 'redux/modules/purchase';
 import styled from 'styled-components';
 
 const PurchaseReview = ({ review, handleVisibleModal }) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteReview = () => {
+    dispatch(deleteReview(review.id));
+  };
+
   return (
     <PurchaseReviewWrapper>
       <ReviewWrapper>
@@ -15,7 +23,9 @@ const PurchaseReview = ({ review, handleVisibleModal }) => {
         >
           리뷰 수정
         </button>
-        <button className="review-delete-btn">리뷰 삭제</button>
+        <button onClick={handleDeleteReview} className="review-delete-btn">
+          리뷰 삭제
+        </button>
       </ReviewButtonWrapper>
     </PurchaseReviewWrapper>
   );

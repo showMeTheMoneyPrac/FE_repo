@@ -8,7 +8,7 @@ import WithdrawalForm from 'components/user/WithdrawalForm';
 
 const UserInfo = () => {
   const [userInfo, setUserInfo] = useState(null);
-  const { changeInfo, setChangeInfo, handleChangeInfo } = useInput({
+  const { inputValue, setInputValue, handleChangeInput } = useInput({
     nickname: '',
     cash: '',
     address: '',
@@ -28,13 +28,13 @@ const UserInfo = () => {
   }, [isLoggedIn]);
 
   const handleSearchAddress = () => {
-    setChangeInfo((prev) => ({ ...prev, address: '' }));
+    setInputValue((prev) => ({ ...prev, address: '' }));
     new window.daum.Postcode({
       oncomplete: function (data) {
         if (data.userSelectedType === 'R') {
-          setChangeInfo((prev) => ({ ...prev, address: data.roadAddress }));
+          setInputValue((prev) => ({ ...prev, address: data.roadAddress }));
         } else {
-          setChangeInfo((prev) => ({ ...prev, address: data.jibunAddress }));
+          setInputValue((prev) => ({ ...prev, address: data.jibunAddress }));
         }
       },
     }).open();
@@ -52,7 +52,7 @@ const UserInfo = () => {
       const { data } = await updateUserInfo(
         {
           beforeNickname: userInfo.nickname,
-          afterNickname: changeInfo.nickname,
+          afterNickname: inputValue.nickname,
         },
         'nickname',
       );
@@ -70,7 +70,7 @@ const UserInfo = () => {
       const { data } = await updateUserInfo(
         {
           leftCash: userInfo.cash,
-          chargeCash: changeInfo.cash,
+          chargeCash: inputValue.cash,
         },
         'cash',
       );
@@ -87,7 +87,7 @@ const UserInfo = () => {
       const { data } = await updateUserInfo(
         {
           beforeAddress: userInfo.address,
-          afterAddress: `${changeInfo.address} ${changeInfo.detailAddress}`,
+          afterAddress: `${inputValue.address} ${inputValue.detailAddress}`,
         },
         'address',
       );
@@ -116,7 +116,7 @@ const UserInfo = () => {
           <InfoChangeForm name="nickname" onSubmit={handleSubmitNickname}>
             <label htmlFor="userNickname">새로운 닉네임</label>
             <input
-              onChange={handleChangeInfo}
+              onChange={handleChangeInput}
               name="nickname"
               id="userNickname"
               type="text"
@@ -145,7 +145,7 @@ const UserInfo = () => {
           <InfoChangeForm onSubmit={handleSubmitCash} name="cash">
             <label htmlFor="userCash">충전할 포인트</label>
             <input
-              onChange={handleChangeInfo}
+              onChange={handleChangeInput}
               name="cash"
               id="userCash"
               type="text"
@@ -178,14 +178,14 @@ const UserInfo = () => {
           <InfoChangeForm onSubmit={handleSubmitAddress} name="address">
             <label htmlFor="userAddress">변경 주소</label>
             <input
-              value={changeInfo.address}
+              value={inputValue.address}
               readOnly
               id="userAddress"
               type="text"
             />
             <label htmlFor="userDetailAddress">상세 주소</label>
             <input
-              onChange={handleChangeInfo}
+              onChange={handleChangeInput}
               name="detailAddress"
               id="userDetailAddress"
               type="text"
