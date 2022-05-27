@@ -1,3 +1,4 @@
+import useSearchQuery from 'hooks/useSearchQuery';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -5,6 +6,7 @@ import styled from 'styled-components';
 const SearchBar = () => {
   const navigate = useNavigate();
   const [searchKeyWord, setSearchKeyword] = useState('');
+  const category = useSearchQuery('category');
 
   const handleChangeSearchKeyword = (e) => {
     setSearchKeyword(e.target.value);
@@ -12,7 +14,11 @@ const SearchBar = () => {
 
   const handleRouteSearchList = (e) => {
     e.preventDefault();
-    navigate(`/product?search=${searchKeyWord}`);
+    navigate(
+      `/product?${
+        category ? `category=${category}&` : ''
+      }search=${searchKeyWord}`,
+    );
   };
 
   return (
@@ -43,13 +49,11 @@ const InputWrapper = styled.div`
   width: 100%;
   input {
     width: 30%;
+    padding: 1rem;
     height: 3rem;
     font-size: 1.6rem;
     box-shadow: 0px 4px 16px rgba(26, 31, 22, 0.15);
     border-radius: 1rem;
-    ::placeholder {
-      padding: 1rem;
-    }
   }
 `;
 

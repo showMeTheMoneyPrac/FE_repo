@@ -15,13 +15,19 @@ const Header = () => {
   const handleLoginModalVisible = () => {
     dispatch(openMemberModal({ modal: 'loginModal' }));
   };
-
   return (
     <>
       <HeaderWrapper>
         <TopWrapper>
           <Logo>
-            <Link to="/">C#</Link>
+            <Link
+              to="/"
+              onClick={() => {
+                window.onload();
+              }}
+            >
+              C#
+            </Link>
           </Logo>
           <nav>
             <HeaderNavList>
@@ -45,6 +51,7 @@ const Header = () => {
 };
 
 const HeaderWrapper = styled.header`
+  padding: 0 3rem;
   width: 100%;
   height: 150px;
   display: flex;
@@ -57,7 +64,7 @@ const HeaderWrapper = styled.header`
 `;
 
 const TopWrapper = styled.div`
-  padding: 2rem 3rem;
+  padding: 2rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

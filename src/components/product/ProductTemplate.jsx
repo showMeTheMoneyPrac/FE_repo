@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ProductList from 'components/product/ProductList';
 import ProductNav from 'components/product/ProductNav';
 import ProductSortNav from 'components/product/ProductSortNav';
+import ScrollBtn from './ScrollBtn';
 
 const ProductTemplate = () => {
   return (
@@ -15,8 +16,8 @@ const ProductTemplate = () => {
           <ProductSortNav />
           <ProductList />
         </LeftWrapper>
+        <ScrollBtn />
       </ProductWrapper>
-      ;
     </>
   );
 };
@@ -26,7 +27,9 @@ const Spacer = styled.div`
 `;
 
 const ProductWrapper = styled.div`
+  width: 100%;
   display: flex;
+  padding: 0 3rem;
 `;
 
 const LeftWrapper = styled.div`
