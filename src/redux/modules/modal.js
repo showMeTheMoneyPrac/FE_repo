@@ -6,7 +6,11 @@ const initialState = {
     loginModal: false,
     registModal: false,
   },
-  reviewModal: false,
+  reviewModal: {
+    visible: false,
+    reviewId: null,
+    orderDetailId: null,
+  },
 };
 
 const modalSlice = createSlice({
@@ -21,10 +25,12 @@ const modalSlice = createSlice({
         [payload.modal]: true,
       };
     },
-    openReviewModal(state) {
+    openReviewModal(state, { payload }) {
+      console.log(payload);
       state.reviewModal = {
-        ...state,
-        reviewModal: true,
+        ...state.reviewModal,
+        visible: true,
+        ...payload,
       };
     },
   },
