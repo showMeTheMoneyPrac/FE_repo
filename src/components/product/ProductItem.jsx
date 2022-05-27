@@ -28,13 +28,15 @@ const ProductItem = () => {
 };
 
 const ProoductItemWrapper = styled.li`
-  margin: 3rem auto;
-  width: 20%;
+  width: 23%;
   border-radius: 0.5rem;
   box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  &:hover {
+    cursor: pointer;
+  }
   .product-img {
     width: 100%;
     object-fit: cover;

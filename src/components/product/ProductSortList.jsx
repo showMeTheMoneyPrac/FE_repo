@@ -2,23 +2,43 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import useSearchQuery from 'hooks/useSearchQuery';
+
 const ProductSortModal = ({ visible }) => {
+  const category = useSearchQuery('category');
+  const search = useSearchQuery('search');
+
   return (
     <ProductSortList visible={visible}>
       <ProductSortItem>
-        <Link className="sort-link" to={'/product?sort=recent'}>
+        <Link
+          className="sort-link"
+          to={`/product?${category ? `category=${category}&` : ''}${
+            search ? `search=${search}&` : ''
+          }sort=recent`}
+        >
           <p className="sort-item">최신순</p>
           <p className="sort-description">상품을 최신순으로 정렬</p>
         </Link>
       </ProductSortItem>
       <ProductSortItem>
-        <Link className="sort-link" to={'/product?sort=cost'}>
+        <Link
+          className="sort-link"
+          to={`/product?${category ? `category=${category}&` : ''}${
+            search ? `search=${search}&` : ''
+          }sort=cost`}
+        >
           <p className="sort-item">가격순</p>
           <p className="sort-description">상품 가격 높은순으로 정렬</p>
         </Link>
       </ProductSortItem>
       <ProductSortItem>
-        <Link className="sort-link" to={'/product?sort=review'}>
+        <Link
+          className="sort-link"
+          to={`/product?${category ? `category=${category}&` : ''}${
+            search ? `search=${search}&` : ''
+          }sort=review`}
+        >
           <p className="sort-item">리뷰순</p>
           <p className="sort-description">상품의 리뷰가 많은순으로 정렬</p>
         </Link>
@@ -29,7 +49,8 @@ const ProductSortModal = ({ visible }) => {
 
 const ProductSortList = styled.ul`
   position: absolute;
-  top: 4rem;
+  bottom: -9.5rem;
+  right: 3rem;
   display: ${({ visible }) => (visible ? 'flex' : 'none')};
   flex-direction: column;
   background-color: #fff;

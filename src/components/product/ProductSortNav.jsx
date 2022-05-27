@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import ProductSortList from 'components/product/ProductSortList';
+import useSearchQuery from 'hooks/useSearchQuery';
 
 const ProductSortNav = () => {
   const [visible, setVisible] = useState(false);
+  const sort = useSearchQuery('sort');
+  const category = useSearchQuery('category');
 
   const handleSortListVisible = () => {
     setVisible(!visible);
@@ -25,7 +28,19 @@ const ProductSortNav = () => {
   return (
     <>
       <SortNavWrapper>
-        <SortBtn onClick={handleSortListVisible}>최신순</SortBtn>
+        <CategoryValue>
+          {!category && '전체'}
+          {category === 'top' && '상의'}
+          {category === 'bottom' && '하의'}
+          {category === 'shoes' && '신발'}
+          {category === 'accessary' && '악세사리'}
+        </CategoryValue>
+        <SortBtn onClick={handleSortListVisible}>
+          {!sort && '최신순'}
+          {sort === 'recent' && '최신순'}
+          {sort === 'cost' && '가격순'}
+          {sort === 'review' && '리뷰순'}
+        </SortBtn>
         <ProductSortList visible={visible} setVisible={setVisible} />
       </SortNavWrapper>
       <Outer onClick={handleSortListUnvisible} visible={visible} />
@@ -35,14 +50,20 @@ const ProductSortNav = () => {
 
 const SortNavWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
-  padding: 2rem 3rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem 3rem;
   position: relative;
 `;
 
+const CategoryValue = styled.h3`
+  font-size: 2rem;
+  font-weight: 600;
+`;
+
 const SortBtn = styled.button`
-  display: flex;
-  justify-content: flex-end;
+  font-size: 1.4rem;
+  font-weight: 600;
 `;
 
 const Outer = styled.div`

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ProductList from 'components/product/ProductList';
 import ProductNav from 'components/product/ProductNav';
 import ProductSortNav from 'components/product/ProductSortNav';
+import ScrollBtn from './ScrollBtn';
 
 const ProductTemplate = () => {
   return (
@@ -15,8 +16,8 @@ const ProductTemplate = () => {
           <ProductSortNav />
           <ProductList />
         </LeftWrapper>
+        <ScrollBtn />
       </ProductWrapper>
-      ;
     </>
   );
 };
