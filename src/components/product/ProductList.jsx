@@ -16,15 +16,6 @@ const ProductList = () => {
       <ProductItem />
       <ProductItem />
       <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
     </ProductListWrapper>
   );
 };
@@ -32,6 +23,8 @@ const ProductList = () => {
 const ProductListWrapper = styled.ul`
   width: 100%;
   display: flex;
+  justify-content: space-around;
+  padding: 0 3rem;
   flex-wrap: wrap;
   gap: 2rem;
 `;
