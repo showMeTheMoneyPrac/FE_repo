@@ -27,7 +27,9 @@ const Spacer = styled.div`
 `;
 
 const ProductWrapper = styled.div`
+  width: 100%;
   display: flex;
+  padding: 0 3rem;
 `;
 
 const LeftWrapper = styled.div`

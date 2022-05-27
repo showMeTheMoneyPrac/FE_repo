@@ -1,26 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-const ProductItem = () => {
+const ProductItem = ({ product }) => {
+  // console.log(product.productId);
   return (
     <ProoductItemWrapper>
       <div className="product-img-container">
         <img
-          // firstImg
           src={
             'https://kream-phinf.pstatic.net/MjAyMTEwMjVfMjk2/MDAxNjM1MTQyNzkyMTMx.fIJHqENLC9yP0OSlFXPaFtZ48eRfOHPBlOaqgYZJjbQg.S42C9McCEAt6Y62aTZkSIu2WgtbkinfC0e-5PGfbfbMg.JPEG/a_28980a81db88429fa0dc21ce120f6878.jpg?type=m_webp'
           }
+          // src={product.firstImg}
           alt="상품이미지"
           className="product-img"
         />
       </div>
       <div className="product-info">
-        <h4 className="product-title">title</h4>
-        <p className="product-category">category</p>
+        <h4 className="product-title">{product.title}</h4>
+        <h5 className="product-summary">summary</h5>
+        {/* <h5 className="product-summary">{product.summary}</h5> */}
+        <p className="product-category">{product.category}</p>
         <div className="product-price">
-          <p>₩{Number(50000000).toLocaleString('en')}</p>
+          <p>₩{product.price.toLocaleString()}</p>
         </div>
         <div className="product-subinfo">
-          <p>review reviewCnt</p>
+          <p>review {product.reviewCnt}</p>
         </div>
       </div>
     </ProoductItemWrapper>
@@ -30,10 +33,11 @@ const ProductItem = () => {
 const ProoductItemWrapper = styled.li`
   width: 23%;
   border-radius: 0.5rem;
-  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
+
   &:hover {
     cursor: pointer;
   }
@@ -50,6 +54,11 @@ const ProoductItemWrapper = styled.li`
     .product-title {
       font-size: 2rem;
       font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .product-summary {
+      font-size: 1.4rem;
+      color: #8e8e8e;
       margin-bottom: 0.5rem;
     }
     .product-price {
