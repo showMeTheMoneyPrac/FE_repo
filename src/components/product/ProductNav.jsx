@@ -20,38 +20,36 @@ const ProductNav = () => {
           </li>
           <li>
             <StyledLink
-              $current={category === 'top'}
+              $current={category === '상의'}
               className="info-link"
-              to={`/product?category=top${search ? `&search=${search}` : ''}`}
+              to={`/product?category=상의${search ? `&search=${search}` : ''}`}
             >
               상의
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              $current={category === 'bottom'}
+              $current={category === '하의'}
               className="purchase-link"
-              to={`/product?category=bottom${
-                search ? `&search=${search}` : ''
-              }`}
+              to={`/product?category=하의${search ? `&search=${search}` : ''}`}
             >
               하의
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              $current={category === 'shoes'}
+              $current={category === '신발'}
               className="purchase-link"
-              to={`/product?category=shoes${search ? `&search=${search}` : ''}`}
+              to={`/product?category=신발${search ? `&search=${search}` : ''}`}
             >
               신발
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              $current={category === 'accessary'}
+              $current={category === '악세사리'}
               className="purchase-link"
-              to={`/product?category=accessary${
+              to={`/product?category=악세사리${
                 search ? `&search=${search}` : ''
               }`}
             >

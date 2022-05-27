@@ -8,7 +8,7 @@ export const fetchUserInfo = () => {
   });
 };
 
-export const registUser = (payload) => {
+export const registUserAPI = (payload) => {
   return client.post('/members/regist', payload);
 };
 
@@ -20,7 +20,7 @@ export const updateUserInfo = (payload, target) => {
   });
 };
 
-export const loginUser = (payload) => {
+export const loginUserAPI = (payload) => {
   return client.post('/members/login', payload);
 };
 

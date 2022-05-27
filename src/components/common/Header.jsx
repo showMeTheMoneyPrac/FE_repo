@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,15 +6,28 @@ import styled from 'styled-components';
 import { openMemberModal } from 'redux/modules/modal';
 import SearchBar from './SearchBar';
 import MemberModal from 'components/modal/MemberModal';
+import { userLogin, userLogout } from 'redux/modules/user';
 
 const Header = () => {
   const dispatch = useDispatch();
-
+  const isLoggedIn = useSelector(({ user }) => user.isLoggedIn);
   const memberModal = useSelector(({ modal }) => modal.memberModal.isOpen);
 
   const handleLoginModalVisible = () => {
     dispatch(openMemberModal({ modal: 'loginModal' }));
   };
+
+  const handleUserLogout = () => {
+    localStorage.removeItem('nickname');
+    dispatch(userLogout());
+  };
+
+  useEffect(() => {
+    const validateLogin = localStorage.getItem('nickname');
+    if (validateLogin) {
+      dispatch(userLogin());
+    }
+  }, [dispatch]);
   return (
     <>
       <HeaderWrapper>
@@ -32,7 +45,11 @@ const Header = () => {
           <nav>
             <HeaderNavList>
               <li>
-                <button onClick={handleLoginModalVisible}>로그인</button>
+                {!isLoggedIn ? (
+                  <button onClick={handleLoginModalVisible}>로그인</button>
+                ) : (
+                  <button onClick={handleUserLogout}>로그아웃</button>
+                )}
               </li>
               <li>
                 <Link to="/user">마이페이지</Link>
