@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import StyledCheckbox from 'components/user/StyledCheckbox';
 import useSelect from 'hooks/useSelect';
 import { openReviewModal } from 'redux/modules/modal';
+import PurchaseReview from './PurchaseReview';
 
 const PurchaseDetail = ({ detail }) => {
   const dispatch = useDispatch();
   const { isSelected, handleSelector } = useSelect();
 
-  const handleVisibleModal = () => {
-    dispatch(openReviewModal());
-  };
+  const handleVisibleModal = useCallback(
+    (reviewId) => {
+      dispatch(openReviewModal(reviewId));
+    },
+    [dispatch],
+  );
 
   return (
     <PurchaseDetailWrapper>
@@ -31,18 +35,23 @@ const PurchaseDetail = ({ detail }) => {
           <h4 className="product-title">{detail.title}</h4>
           <p className="product-option">{detail.ea}ea</p>
           <p className="product-price">{detail.price.toLocaleString()}원</p>
-          <ReviewButtonWrapper>
-            <button onClick={handleVisibleModal} className="review-btn">
-              {detail.review ? '리뷰 수정' : '리뷰 작성'}
-            </button>
-          </ReviewButtonWrapper>
         </ProductInfo>
+        {!detail.review && (
+          <button
+            onClick={() =>
+              handleVisibleModal({ orderDetailId: detail.orderDetailId })
+            }
+            className="review-write-btn"
+          >
+            리뷰 작성
+          </button>
+        )}
       </PurchaseInfo>
       {detail.review && (
-        <ReviewWrapper>
-          <h5 className="review-title">{detail.review.title}</h5>
-          <p className="review-content">{detail.review.content}</p>
-        </ReviewWrapper>
+        <PurchaseReview
+          review={detail.review}
+          handleVisibleModal={handleVisibleModal}
+        />
       )}
     </PurchaseDetailWrapper>
   );
@@ -75,6 +84,14 @@ const PurchaseInfo = styled.div`
     height: 6rem;
     object-fit: cover;
   }
+  .review-write-btn {
+    align-self: flex-end;
+    font-size: 1.4rem;
+    background-color: #222;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.8rem;
+  }
 `;
 
 const ProductInfo = styled.div`
@@ -95,31 +112,6 @@ const ProductInfo = styled.div`
     flex: 1;
     display: flex;
     align-items: flex-end;
-  }
-`;
-
-const ReviewButtonWrapper = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 1.5rem;
-  .review-btn {
-    font-size: 1.4rem;
-    background-color: #222;
-    color: #fff;
-    padding: 0.8rem 1.5rem;
-    border-radius: 0.8rem;
-  }
-`;
-
-const ReviewWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  .review-title {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-  .review-content {
-    font-size: 1.2rem;
   }
 `;
 
