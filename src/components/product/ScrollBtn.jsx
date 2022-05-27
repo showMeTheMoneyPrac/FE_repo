@@ -17,7 +17,7 @@ const ScrollBtnWrapper = styled.div`
   text-align: center;
   position: fixed;
   bottom: 10rem;
-  left: 14rem;
+  left: 10rem;
   .scroll-btn {
     font-size: 3rem;
   }

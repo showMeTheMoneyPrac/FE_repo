@@ -65,9 +65,10 @@ const ProductNav = () => {
 };
 
 const ProductNavWrapper = styled.nav`
-  width: 100%;
+  width: 40rem;
   background-color: #fff;
-  padding: 6rem 3rem;
+  padding: 6rem 0;
+  margin-right: 1rem;
   .nav-title {
     font-size: 2.2rem;
     font-weight: bold;
