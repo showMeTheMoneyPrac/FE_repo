@@ -1,30 +1,99 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
 import LabelInput from 'components/form/LabelInput';
 import { changeRegistFormAddress, initializeForm } from 'redux/modules/form';
-import { registUser } from 'api/user';
+import { registUserAPI } from 'api/user';
 import { openMemberModal } from 'redux/modules/modal';
 
 const RegistForm = () => {
   const dispatch = useDispatch();
-  const baseAddress = useSelector(({ form }) => form.registForm.baseAddress);
   const registForm = useSelector(({ form }) => form.registForm);
+  const [errorMsg, setErrorMsg] = useState(' ');
+
+  const {
+    email,
+    nickname,
+    baseAddress,
+    detailAddress,
+    password,
+    passwordCheck,
+  } = registForm;
+
+  const handlelValidateEmail = (email) => {
+    const regExr =
+      /^[0-9a-zA-Z]*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+
+    return regExr.test(email);
+  };
+
+  const handleValidateNickname = (nickname) => {
+    const regExr = /^[0-9a-zA-Z]/;
+    return regExr.test(nickname);
+  };
 
   const handleRegist = async (e) => {
     e.preventDefault();
+
+    const validateEmail = handlelValidateEmail(email);
+    const validateNickname = handleValidateNickname(nickname);
+
+    if (!email) {
+      setErrorMsg('아이디를 입력해주세요');
+      return;
+    }
+
+    if (!validateEmail) {
+      setErrorMsg('아이디를 이메일 형식으로 입력해주세요');
+      return;
+    }
+
+    if (!nickname) {
+      setErrorMsg('닉네임을 입력해주세요');
+      return;
+    }
+
+    if (!validateNickname) {
+      setErrorMsg('닉네임은 영어로 적어주세요');
+      return;
+    }
+
+    if (!password) {
+      setErrorMsg('비밀번호를 입력해주세요');
+      return;
+    }
+
+    if (!passwordCheck) {
+      setErrorMsg('비밀번호 확인을 입력해주세요');
+      return;
+    }
+
+    if (password !== passwordCheck) {
+      setErrorMsg('비밀번호 확인이 일치하지 않습니다');
+      return;
+    }
+
+    if (!baseAddress) {
+      setErrorMsg('주소를 검색해주세요');
+      return;
+    }
+
+    if (!detailAddress) {
+      setErrorMsg('상세 주소를 입력해주세요');
+      return;
+    }
+
     const registPayload = {
-      email: registForm.email,
-      nickname: registForm.nickname,
-      address: `${registForm.baseAddress} ${registForm.detailAddress}`,
-      password: registForm.password,
-      passwordCheck: registForm.passwordCheck,
+      email,
+      nickname,
+      address: `${baseAddress} ${detailAddress}`,
+      password,
+      passwordCheck,
     };
 
-    const res = await registUser(registPayload);
+    await registUserAPI(registPayload);
 
-    console.log(res);
     dispatch(initializeForm());
     dispatch(openMemberModal({ modal: 'loginModal' }));
   };
@@ -99,6 +168,7 @@ const RegistForm = () => {
         form="registForm"
       />
       <button className="submit-btn">회원가입</button>
+      <ErrorMsg>{errorMsg}</ErrorMsg>
     </RegistFormWrapper>
   );
 };
@@ -106,8 +176,8 @@ const RegistForm = () => {
 const RegistFormWrapper = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
-  gap: 2rem;
+  padding-top: 2rem;
+  gap: 1.5rem;
   .submit-btn {
     background-color: #000;
     color: #fff;
@@ -119,16 +189,21 @@ const RegistFormWrapper = styled.form`
 
 const SearchAddressWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   .search-address-btn {
     width: 20%;
     color: #fff;
     background-color: #000;
-    margin-top: 1rem;
+    margin: 2rem 0 0 2rem;
     padding: 1rem;
     border-radius: 1rem;
     cursor: pointer;
   }
+`;
+
+const ErrorMsg = styled.p`
+  font-size: 1.4rem;
+  color: #ff0000;
+  height: 1.4rem;
 `;
 
 export default RegistForm;
