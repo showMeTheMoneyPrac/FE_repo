@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import ProductItem from './ProductItem';
+import { fetchProductList } from 'api/product';
+import useSearchQuery from 'hooks/useSearchQuery';
 
 const ProductList = () => {
+  const sort = useSearchQuery('sort');
+  const searchKeyword = useSearchQuery('search');
+  const category = useSearchQuery('category');
+  const page = 1;
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const payload = {
+      sort,
+      searchKeyword,
+      category,
+      page,
+    };
+
+    const getProductList = async () => {
+      const res = await fetchProductList(payload);
+      setProducts(res.data);
+    };
+
+    getProductList();
+  }, [sort, searchKeyword, category]);
   return (
     <ProductListWrapper>
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
+      {products.map((product) => (
+        <ProductItem key={product.productId} product={product} />
+      ))}
     </ProductListWrapper>
   );
 };
 
 const ProductListWrapper = styled.ul`
-  width: 100%;
   display: flex;
-  justify-content: space-around;
-  padding: 0 3rem;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 2rem;
 `;
