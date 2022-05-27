@@ -30,10 +30,7 @@ const ProductSortNav = () => {
       <SortNavWrapper>
         <CategoryValue>
           {!category && '전체'}
-          {category === 'top' && '상의'}
-          {category === 'bottom' && '하의'}
-          {category === 'shoes' && '신발'}
-          {category === 'accessary' && '악세사리'}
+          {category && category}
         </CategoryValue>
         <SortBtn onClick={handleSortListVisible}>
           {!sort && '최신순'}

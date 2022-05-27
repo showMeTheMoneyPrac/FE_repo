@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import ProductItem from './ProductItem';
-import { fetchProductList } from 'api/product';
+import { fetchProductListAPI } from 'api/product';
 import useSearchQuery from 'hooks/useSearchQuery';
 
 const ProductList = () => {
   const sort = useSearchQuery('sort');
   const searchKeyword = useSearchQuery('search');
   const category = useSearchQuery('category');
-  const page = 1;
+  const page = 0;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const ProductList = () => {
     };
 
     const getProductList = async () => {
-      const res = await fetchProductList(payload);
+      const res = await fetchProductListAPI(payload);
       setProducts(res.data);
     };
 
