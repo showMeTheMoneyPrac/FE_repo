@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
-import StyledCheckbox from 'components/user/StyledCheckbox';
+import StyledCheckbox from 'components/common/StyledCheckbox';
 import useSelect from 'hooks/useSelect';
 import { openReviewModal } from 'redux/modules/modal';
-import PurchaseReview from './PurchaseReview';
+import PurchaseReview from 'components/user/PurchaseReview';
 
 const PurchaseDetail = ({ detail }) => {
   const dispatch = useDispatch();
