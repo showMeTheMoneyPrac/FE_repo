@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
 import SideBar from './SideBar';
+import Spacer from 'components/common/Spacer';
 
 const UserTemplate = () => {
   return (
@@ -15,10 +16,6 @@ const UserTemplate = () => {
     </>
   );
 };
-
-const Spacer = styled.div`
-  min-height: 150px;
-`;
 
 const UserWrapper = styled.div`
   display: flex;
