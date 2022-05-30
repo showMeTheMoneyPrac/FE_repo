@@ -17,7 +17,7 @@ export const deleteBucketItemAPI = (cartId) => {
 };
 
 export const buyBucketListAPI = (payload) => {
-  return client.post(`/orders`, {
+  return client.post(`/orders`, payload, {
     headers: {
       Authorization: localStorage.getItem('nickname'),
     },
