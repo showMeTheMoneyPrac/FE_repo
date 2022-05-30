@@ -3,15 +3,38 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchProductDetailAPI } from 'api/product';
+import { createCartItemAPI } from 'api/cart';
+import { useSelector } from 'react-redux';
 
 const ProductDetail = ({ match }) => {
   const { productId } = useParams();
+  const isLoggedIn = useSelector(({ user }) => user.isLoggedIn);
   const [product, setProduct] = useState({});
   const [visibleImg, setVisibleImg] = useState(null);
   const [count, setCount] = useState(1);
+  const [option, setOption] = useState('');
 
   const handleChangeVisibleImg = (e) => {
     setVisibleImg(e.target.id);
+  };
+
+  const handleChangeOption = (e) => {
+    setOption(e.target.value);
+  };
+
+  const handleCreateCartItem = async () => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    const payload = {
+      option,
+      price: product.price * count,
+      ea: +count,
+    };
+
+    await createCartItemAPI({ productId: product.productId, payload });
   };
 
   useEffect(() => {
@@ -56,7 +79,11 @@ const ProductDetail = ({ match }) => {
         <div>
           {product.optionList &&
             product?.optionList.map((option, i) => (
-              <input key={i} defaultValue={option} />
+              <input
+                key={i}
+                defaultValue={option}
+                onClick={handleChangeOption}
+              />
             ))}
         </div>
         <div>주문 수량</div>
@@ -80,7 +107,7 @@ const ProductDetail = ({ match }) => {
         </CountWrapper>
         <ButtonWrapper>
           <button>바로 구매하기</button>
-          <button>장바구니 담기</button>
+          <button onClick={handleCreateCartItem}>장바구니 담기</button>
         </ButtonWrapper>
       </ProductInfoWrapper>
       <ul>{product.reviewList}</ul>
