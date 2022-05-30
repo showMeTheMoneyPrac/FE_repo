@@ -15,3 +15,11 @@ export const deleteBucketItemAPI = (cartId) => {
     },
   });
 };
+
+export const buyBucketListAPI = (payload) => {
+  return client.post(`/orders`, {
+    headers: {
+      Authorization: localStorage.getItem('nickname'),
+    },
+  });
+};
