@@ -6,3 +6,4 @@ import bucketSaga from 'redux/sagas/bucketSaga';
 
 export default function* rootSaga() {
   yield all([purchaseSaga(), productSaga(), bucketSaga()]);
+}
