@@ -1,9 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 const ProductItem = ({ product }) => {
-  // console.log(product.productId);
+  const navigate = useNavigate();
+
+  const handleRouteDetailPage = () => {
+    navigate(`/product/${product.productId}`);
+  };
   return (
-    <ProoductItemWrapper>
+    <ProoductItemWrapper onClick={handleRouteDetailPage}>
       <div className="product-img-container">
         <img
           src={

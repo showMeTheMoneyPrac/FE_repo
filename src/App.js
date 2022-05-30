@@ -5,6 +5,7 @@ import MainPage from 'pages/MainPage';
 import PurchaseList from 'components/user/PurchaseList';
 import UserInfo from 'components/user/UserInfo';
 import UserPage from 'pages/UserPage';
+import ProductDetailPage from 'pages/ProductDetailPage';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/product/:productId" element={<ProductDetailPage />} />
           <Route path="/product" element={<MainPage />} />
           <Route path="/user" element={<UserPage />}>
             <Route path="info" element={<UserInfo />} />
