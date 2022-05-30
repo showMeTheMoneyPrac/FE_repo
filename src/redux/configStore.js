@@ -5,6 +5,7 @@ import modal from 'redux/modules/modal';
 import form from 'redux/modules/form';
 import purchase from 'redux/modules/purchase';
 import user from 'redux/modules/user';
+import product from 'redux/modules/product';
 import bucket from 'redux/modules/bucket';
 import rootSaga from 'redux/sagas';
 
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   purchase,
   bucket,
   user,
+  product,
 });
 
 const sagaMiddleware = createSagaMiddleware();

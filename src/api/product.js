@@ -10,3 +10,7 @@ export const fetchProductListAPI = (payload) => {
     },
   });
 };
+
+export const fetchProductDetailAPI = (productId) => {
+  return client.get(`/products/${productId}`);
+};

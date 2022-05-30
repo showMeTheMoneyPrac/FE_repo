@@ -63,11 +63,11 @@ const ProductNav = () => {
 };
 
 const ProductNavWrapper = styled.nav`
-  width: 40rem;
   background-color: #fff;
   padding: 6rem 0;
-  margin-right: 1rem;
+  margin-right: 2rem;
   .nav-title {
+    width: max-content;
     font-size: 2.2rem;
     font-weight: bold;
   }
@@ -80,6 +80,7 @@ const ProductNavWrapper = styled.nav`
 `;
 
 const StyledLink = styled(Link)`
+  width: max-content;
   display: block;
   font-size: 1.8rem;
   font-weight: ${(props) => (props.$current ? 'bold' : 'normal')};
