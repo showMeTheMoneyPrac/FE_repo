@@ -41,6 +41,7 @@ const BucketItem = ({ bucketItem }) => {
     <BucketItemWrapper>
       <label htmlFor={bucketItem.cartId}>
         <input
+          checked={selectedList?.includes(bucketItem.cartId)}
           onChange={handleSelectProduct}
           id={bucketItem.cartId}
           className="a11y-hidden"
@@ -61,9 +62,12 @@ const BucketItem = ({ bucketItem }) => {
           <NoImage size="6" />
         )}
       </Link>
-      <Link to={`/product/${bucketItem.productId}`} className="product-title">
-        <h3>{bucketItem.title}</h3>
-      </Link>
+      <ProductTitleWrapper>
+        <Link to={`/product/${bucketItem.productId}`} className="product-link">
+          <h3 className="product-title">{bucketItem.title}</h3>
+          <p className="product-option">{bucketItem.optionContent}</p>
+        </Link>
+      </ProductTitleWrapper>
       <ProductCountWrapper>
         <button
           id={bucketItem.cartId}
@@ -87,9 +91,7 @@ const BucketItem = ({ bucketItem }) => {
           <PlusOutlined />
         </button>
       </ProductCountWrapper>
-      <p className="product-price">
-        {(bucketItem.bill * bucketItem.ea).toLocaleString()}원
-      </p>
+      <p className="product-price">{bucketItem.bill.toLocaleString()}원</p>
       <button
         onClick={handleRemoveProduct}
         id={bucketItem.cartId}
@@ -116,18 +118,7 @@ const BucketItemWrapper = styled.li`
     height: 100%;
     object-fit: cover;
   }
-  .product-title {
-    font-size: 1.6rem;
-    font-weight: bold;
-    flex: 1;
-    line-height: 2rem;
-    max-height: 1.8rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+
   .product-price {
     min-width: 10rem;
     font-size: 1.6rem;
@@ -139,6 +130,32 @@ const BucketItemWrapper = styled.li`
     > * {
       pointer-events: none;
     }
+  }
+`;
+
+const ProductTitleWrapper = styled.div`
+  flex: 1;
+  .product-link {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .product-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 2rem;
+    max-height: 1.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-option {
+    font-size: 1.4rem;
+    color: #8e8e8e;
   }
 `;
 
