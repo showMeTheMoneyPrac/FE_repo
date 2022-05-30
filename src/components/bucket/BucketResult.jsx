@@ -2,14 +2,18 @@ import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { EnvironmentOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
+import { buyBucketListAPI } from 'api/bucket';
 
 const BucketResult = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState();
   const userInfo = useSelector(({ user }) => user.userInfo);
   const bucketList = useSelector(({ bucket }) => bucket.bucketList);
 
   const totalPrice = useMemo(
-    () => bucketList.reduce((prev, curr) => prev + curr.ea * curr.bill, 0),
+    () => bucketList.reduce((prev, curr) => prev + curr.bill, 0),
     [bucketList],
   );
 
@@ -18,9 +22,23 @@ const BucketResult = () => {
     [totalPrice, userInfo?.cash],
   );
 
-  const handleBuyBucketList = () => {
+  const handleBuyBucketList = async () => {
     if (restPrice < 0) {
       setError('보유 포인트가 부족합니다.');
+      return;
+    }
+
+    const payload = {
+      cartIdList: bucketList.map((bucketItem) => bucketItem.cartId),
+      totalPrice: totalPrice,
+      address: userInfo.address,
+    };
+
+    try {
+      await buyBucketListAPI(payload);
+      navigate('/');
+    } catch (e) {
+      console.log(e);
     }
   };
 
