@@ -6,7 +6,7 @@ export const fetchProductListAPI = (payload) => {
       sort: `${payload.sort ? payload.sort : ''}`,
       category: `${payload.category ? payload.category : ''}`,
       searchKeyword: `${payload.searchKeyword ? payload.searchKeyword : ''}`,
-      page: 0,
+      page: payload.page,
     },
   });
 };

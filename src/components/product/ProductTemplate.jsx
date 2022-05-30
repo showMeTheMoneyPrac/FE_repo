@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import ProductList from 'components/product/ProductList';
 import ProductNav from 'components/product/ProductNav';
 import ProductSortNav from 'components/product/ProductSortNav';
-import ScrollBtn from './ScrollBtn';
+import ScrollBtn from 'components/product/ScrollBtn';
+import Lodaing from 'components/product/Lodaing';
 
 const ProductTemplate = () => {
   return (
@@ -15,6 +16,7 @@ const ProductTemplate = () => {
         <RightWrapper>
           <ProductSortNav />
           <ProductList />
+          <Lodaing />
         </RightWrapper>
         <ScrollBtn />
       </ProductWrapper>
