@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { updateUserInfo, fetchUserInfo } from 'api/user';
+import { updateUserInfo, fetchUserInfoAPI } from 'api/user';
 import useToggle from 'hooks/useToggle';
 import useInput from 'hooks/useInput';
 import WithdrawalForm from 'components/user/WithdrawalForm';
@@ -19,7 +19,7 @@ const UserInfo = () => {
 
   useEffect(() => {
     const handleFetchUserInfo = async () => {
-      const { data } = await fetchUserInfo();
+      const { data } = await fetchUserInfoAPI();
       setUserInfo(data);
     };
     if (isLoggedIn) {

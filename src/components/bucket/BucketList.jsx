@@ -9,6 +9,7 @@ import {
   selectAllBucketItem,
 } from 'redux/modules/bucket';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserInfo } from 'redux/modules/user';
 
 const BucketList = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const BucketList = () => {
   const selectedList = useSelector(({ bucket }) => bucket.selectedList);
 
   useEffect(() => {
+    dispatch(fetchUserInfo());
     dispatch(initBucketList());
   }, [dispatch]);
 
@@ -78,7 +80,7 @@ const BucketList = () => {
 
 const BucketInner = styled.section`
   flex: 1;
-  margin-right: 2rem;
+  margin-right: 4rem;
   .bucket-title {
     font-size: 2.2rem;
     font-weight: bold;
