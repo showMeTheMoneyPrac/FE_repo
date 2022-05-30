@@ -12,10 +12,10 @@ const ProductTemplate = () => {
       <Spacer />
       <ProductWrapper>
         <ProductNav />
-        <LeftWrapper>
+        <RightWrapper>
           <ProductSortNav />
           <ProductList />
-        </LeftWrapper>
+        </RightWrapper>
         <ScrollBtn />
       </ProductWrapper>
     </>
@@ -32,7 +32,7 @@ const ProductWrapper = styled.div`
   padding: 0 3rem;
 `;
 
-const LeftWrapper = styled.div`
+const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;

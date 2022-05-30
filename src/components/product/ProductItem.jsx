@@ -9,28 +9,26 @@ const ProductItem = ({ product }) => {
   };
   return (
     <ProoductItemWrapper onClick={handleRouteDetailPage}>
-      <div className="product-img-container">
-        <img
-          src={
-            'https://kream-phinf.pstatic.net/MjAyMTEwMjVfMjk2/MDAxNjM1MTQyNzkyMTMx.fIJHqENLC9yP0OSlFXPaFtZ48eRfOHPBlOaqgYZJjbQg.S42C9McCEAt6Y62aTZkSIu2WgtbkinfC0e-5PGfbfbMg.JPEG/a_28980a81db88429fa0dc21ce120f6878.jpg?type=m_webp'
-          }
-          // src={product.firstImg}
-          alt="상품이미지"
-          className="product-img"
-        />
-      </div>
-      <div className="product-info">
-        <h4 className="product-title">{product.title}</h4>
-        <h5 className="product-summary">summary</h5>
-        {/* <h5 className="product-summary">{product.summary}</h5> */}
-        <p className="product-category">{product.category}</p>
-        <div className="product-price">
-          <p>₩{product.price.toLocaleString()}</p>
+      <ProductInfoWrapper>
+        <div className="product-img-container">
+          <img
+            src={product.firstImg}
+            alt="상품이미지"
+            className="product-img"
+          />
         </div>
-        <div className="product-subinfo">
-          <p>review {product.reviewCnt}</p>
+        <div className="product-info">
+          <h4 className="product-title">{product.title}</h4>
+          <h5 className="product-summary">{product.summary}</h5>
+          <p className="product-category">{product.category}</p>
+          <div className="product-price">
+            <p>₩{product.price.toLocaleString()}</p>
+          </div>
+          <div className="product-subinfo">
+            <p>review {product.reviewCnt}</p>
+          </div>
         </div>
-      </div>
+      </ProductInfoWrapper>
     </ProoductItemWrapper>
   );
 };
@@ -40,8 +38,6 @@ const ProoductItemWrapper = styled.li`
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
 
   &:hover {
     cursor: pointer;
@@ -84,6 +80,10 @@ const ProoductItemWrapper = styled.li`
       border-radius: 1rem;
     }
   }
+`;
+
+const ProductInfoWrapper = styled.div`
+  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
 `;
 
 export default ProductItem;

@@ -39,6 +39,7 @@ const ProductList = () => {
 const ProductListWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 8rem;
   gap: 2rem;
 `;
 
