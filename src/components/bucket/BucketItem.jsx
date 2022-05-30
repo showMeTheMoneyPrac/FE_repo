@@ -6,6 +6,7 @@ import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 import StyledCheckbox from 'components/common/StyledCheckbox';
 import { removeBucketItem, selectBucketItem } from 'redux/modules/bucket';
+import NoImage from 'components/common/NoImage';
 
 const BucketItem = ({ bucketItem }) => {
   const dispatch = useDispatch();
@@ -37,17 +38,21 @@ const BucketItem = ({ bucketItem }) => {
         />
       </label>
       <Link to={`/product/${bucketItem.productId}`} className="product-link">
-        <img
-          className="product-img"
-          src={bucketItem.firstImg}
-          alt="product-img"
-        />
+        {bucketItem.firstImg !== '123' ? (
+          <img
+            className="product-img"
+            src={bucketItem.firstImg}
+            alt="product-img"
+          />
+        ) : (
+          <NoImage size="6" />
+        )}
       </Link>
       <Link to={`/product/${bucketItem.productId}`} className="product-title">
         <h3>{bucketItem.title}</h3>
       </Link>
       <ProductCountWrapper>
-        <button className="decrease-btn">
+        <button disabled={bucketItem.ea <= 1} className="decrease-btn">
           <MinusOutlined />
         </button>
         <input
