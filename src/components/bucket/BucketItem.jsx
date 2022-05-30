@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 import StyledCheckbox from 'components/common/StyledCheckbox';
-import { removeBucketItem, selectBucketItem } from 'redux/modules/bucket';
+import {
+  decreaseProductCount,
+  incraeseProductCount,
+  removeBucketItem,
+  selectBucketItem,
+} from 'redux/modules/bucket';
 import NoImage from 'components/common/NoImage';
 
 const BucketItem = ({ bucketItem }) => {
@@ -22,6 +27,14 @@ const BucketItem = ({ bucketItem }) => {
 
   const handleRemoveProduct = (e) => {
     dispatch(removeBucketItem(e.target.id));
+  };
+
+  const handleIncreaseProductCount = (e) => {
+    dispatch(incraeseProductCount(+e.target.id));
+  };
+
+  const handleDecreaseProductCount = (e) => {
+    dispatch(decreaseProductCount(+e.target.id));
   };
 
   return (
@@ -52,7 +65,12 @@ const BucketItem = ({ bucketItem }) => {
         <h3>{bucketItem.title}</h3>
       </Link>
       <ProductCountWrapper>
-        <button disabled={bucketItem.ea <= 1} className="decrease-btn">
+        <button
+          id={bucketItem.cartId}
+          onClick={handleDecreaseProductCount}
+          disabled={bucketItem.ea <= 1}
+          className="decrease-btn"
+        >
           <MinusOutlined />
         </button>
         <input
@@ -61,7 +79,11 @@ const BucketItem = ({ bucketItem }) => {
           type="text"
           readOnly
         />
-        <button className="increase-btn">
+        <button
+          id={bucketItem.cartId}
+          onClick={handleIncreaseProductCount}
+          className="increase-btn"
+        >
           <PlusOutlined />
         </button>
       </ProductCountWrapper>
@@ -135,6 +157,9 @@ const ProductCountWrapper = styled.div`
   .decrease-btn {
     display: flex;
     font-size: 1.4rem;
+    > * {
+      pointer-events: none;
+    }
   }
 `;
 
