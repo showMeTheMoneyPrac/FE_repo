@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  loading: false,
+  isLoading: false,
+  productList: [],
 };
 
 const productSlice = createSlice({
@@ -9,11 +10,16 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     fetchProductList(state) {
-      state.loading = true;
+      state.isLoading = true;
+    },
+    fetchProductListSuccess(state, { payload }) {
+      state.isLoading = false;
+      state.productList = [...state.productList, ...payload];
     },
   },
 });
 
-export const { fetchProductList } = productSlice.actions;
+export const { fetchProductList, fetchProductListSuccess } =
+  productSlice.actions;
 
 export default productSlice.reducer;

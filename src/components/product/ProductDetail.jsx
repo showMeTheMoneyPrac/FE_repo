@@ -30,7 +30,7 @@ const ProductDetail = ({ match }) => {
 
     const payload = {
       option,
-      price: product.price * count,
+      price: product.price,
       ea: +count,
     };
 
