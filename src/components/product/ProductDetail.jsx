@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchProductDetailAPI } from 'api/product';
@@ -11,7 +11,6 @@ import ReviewList from './ReviewList';
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   const [visibleImg, setVisibleImg] = useState(null);
@@ -85,7 +84,6 @@ const ProductDetail = () => {
         price: product.price,
         ea: +count,
       };
-      console.log(payload);
 
       await purchaseNowAPI({ productId: product.productId, payload });
       alert('구매 완료');
