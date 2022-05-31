@@ -8,16 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { purchaseNowAPI } from 'api/purchase';
 import { fetchUserInfo } from 'redux/modules/user';
 import ReviewList from './ReviewList';
+import NoImage from 'components/common/NoImage';
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const [visibleImg, setVisibleImg] = useState(null);
   const [count, setCount] = useState(0);
   const [option, setOption] = useState('');
   const userInfo = useSelector(({ user }) => user.userInfo);
-
+  console.log(product);
   useEffect(() => {
     if (localStorage.getItem('nickname')) dispatch(fetchUserInfo());
   }, [dispatch]);
@@ -104,36 +105,48 @@ const ProductDetail = () => {
     <>
       <ProductDetailWrapper>
         <ProductImgList>
-          {product.imgList &&
+          {product?.imgList &&
             product.imgList.map((img, i) => {
               return (
                 <ProductImgItem key={i}>
-                  <img
-                    id={i}
-                    src={img}
-                    alt="상품이미지"
-                    onClick={handleChangeVisibleImg}
-                  />
+                  {img === '123' ? (
+                    <NoImage size={4} />
+                  ) : (
+                    <img
+                      id={i}
+                      src={img}
+                      alt="상품이미지"
+                      className="img-item"
+                      onClick={handleChangeVisibleImg}
+                    />
+                  )}
                 </ProductImgItem>
               );
             })}
         </ProductImgList>
-        <VisibleImgWrapper
-          src={product.imgList && product?.imgList[visibleImg]}
-          alt="이미지"
-        />
+        <VisibleImgWrapper>
+          {product?.imgList[visibleImg] === '123' ? (
+            <NoImage size={20} />
+          ) : (
+            <img
+              src={product?.imgList && product?.imgList[visibleImg]}
+              alt="이미지"
+              className="visible-img"
+            />
+          )}
+        </VisibleImgWrapper>
         <ProductInfoWrapper>
-          <ProductTitle>{product.title}</ProductTitle>
-          <Detail>{product.detail}</Detail>
-          <Category>{product.category}</Category>
+          <ProductTitle>{product?.title}</ProductTitle>
+          <Detail>{product?.detail}</Detail>
+          <Category>{product?.category}</Category>
           <Price>
-            <p>₩{product.price && product.price.toLocaleString()}</p>
+            <p>₩{product?.price && product.price.toLocaleString()}</p>
           </Price>
           <PurchaseFormWrapper>
             <p>옵션</p>
             <ul className="option-list">
-              {product.optionList &&
-                product?.optionList.map((optionItem, i) => (
+              {product?.optionList &&
+                product.optionList.map((optionItem, i) => (
                   <li>
                     <button
                       key={i * 10}
@@ -177,7 +190,9 @@ const ProductDetail = () => {
           </ButtonWrapper>
         </ProductInfoWrapper>
       </ProductDetailWrapper>
-      <ReviewList reviews={product.reviewList} />
+      {product?.reviewList.length && (
+        <ReviewList reviews={product.reviewList} />
+      )}
     </>
   );
 };
@@ -229,19 +244,24 @@ const ProductImgList = styled.ul`
 `;
 
 const ProductImgItem = styled.li`
-  text-align: center;
+  width: 6rem;
+  height: 6rem;
   border: 0.1rem solid #cecece;
   cursor: pointer;
-  img {
-    width: 6rem;
+  .img-item {
+    width: 100%;
     object-fit: cover;
   }
 `;
 
-const VisibleImgWrapper = styled.img`
+const VisibleImgWrapper = styled.div`
   width: 40%;
   height: 50rem;
-  object-fit: cover;
+  .visible-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const PurchaseFormWrapper = styled.div`
