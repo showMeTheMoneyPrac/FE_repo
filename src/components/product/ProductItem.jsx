@@ -29,7 +29,7 @@ const ProductItem = ({ product }) => {
           <h5 className="product-summary">{product.summary}</h5>
           <p className="product-category">{product.category}</p>
           <div className="product-price">
-            <p>₩{product.price.toLocaleString()}</p>
+            <p>{product.price.toLocaleString()}원</p>
           </div>
           <div className="product-subinfo">
             <p>review {product.reviewCnt}</p>
