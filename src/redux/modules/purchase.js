@@ -1,7 +1,8 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   purchaseList: null,
+  selectedList: [],
 };
 
 const purchaseSlice = createSlice({
@@ -11,6 +12,20 @@ const purchaseSlice = createSlice({
     initPurchaseList: () => initialState,
     initPurchaseListSuccess(state, { payload }) {
       state.purchaseList = payload.ordersList;
+    },
+    selectPurchaseItem(state, { payload }) {
+      state.selectedList = payload.type
+        ? [...state.selectedList.filter((id) => id !== payload.id)]
+        : [...state.selectedList, payload.id];
+    },
+    selectAllPurchaseItem(state, { payload }) {
+      const newArr = [];
+      state.purchaseList.forEach((purchaseItem) => {
+        purchaseItem.ordersDetailList.forEach((orderDetail) =>
+          newArr.push(orderDetail.orderDetailId),
+        );
+      });
+      state.selectedList = payload ? newArr : [];
     },
     createReview() {},
     createReviewSuccess(state, { payload }) {
@@ -70,6 +85,8 @@ const purchaseSlice = createSlice({
 export const {
   initPurchaseList,
   initPurchaseListSuccess,
+  selectPurchaseItem,
+  selectAllPurchaseItem,
   createReview,
   createReviewSuccess,
   updateReview,

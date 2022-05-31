@@ -14,8 +14,12 @@ import {
 import { closeModal } from 'redux/modules/modal';
 
 function* initPurchaseListSaga(action) {
-  const { data } = yield call(purchaseAPI.fetchPurchaseListAPI);
-  yield put(initPurchaseListSuccess(data));
+  try {
+    const { data } = yield call(purchaseAPI.fetchPurchaseListAPI);
+    yield put(initPurchaseListSuccess(data));
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* createReviewSaga(action) {
