@@ -16,6 +16,14 @@ export const deleteBucketItemAPI = (cartId) => {
   });
 };
 
+export const updateBucketCountAPI = (payload) => {
+  return client.patch(`/carts`, payload, {
+    headers: {
+      Authorization: localStorage.getItem('nickname'),
+    },
+  });
+};
+
 export const buyBucketListAPI = (payload) => {
   return client.post(`/orders`, payload, {
     headers: {
