@@ -69,7 +69,6 @@ const ProductInfoWrapper = styled.div`
 
   .product-info {
     width: 100%;
-    height: 100%;
     padding: 1rem;
     display: flex;
     flex-direction: column;
