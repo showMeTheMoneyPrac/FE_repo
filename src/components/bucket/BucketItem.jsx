@@ -6,10 +6,9 @@ import { CloseOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 import StyledCheckbox from 'components/common/StyledCheckbox';
 import {
-  decreaseProductCount,
-  incraeseProductCount,
   removeBucketItem,
   selectBucketItem,
+  updateBucketItemCount,
 } from 'redux/modules/bucket';
 import NoImage from 'components/common/NoImage';
 
@@ -30,11 +29,15 @@ const BucketItem = ({ bucketItem }) => {
   };
 
   const handleIncreaseProductCount = (e) => {
-    dispatch(incraeseProductCount(+e.target.id));
+    dispatch(
+      updateBucketItemCount({ cartId: e.target.id, ea: bucketItem.ea + 1 }),
+    );
   };
 
   const handleDecreaseProductCount = (e) => {
-    dispatch(decreaseProductCount(+e.target.id));
+    dispatch(
+      updateBucketItemCount({ cartId: e.target.id, ea: bucketItem.ea - 1 }),
+    );
   };
 
   return (

@@ -27,17 +27,11 @@ const bucketSlice = createSlice({
     removeBucketItemSuccess(state, { payload }) {
       state.bucketList = payload;
     },
-    incraeseProductCount(state, { payload }) {
+    updateBucketItemCount(state, { payload }) {},
+    updateBucketItemCountSuccess(state, { payload }) {
       state.bucketList = state.bucketList.map((bucketItem) =>
-        bucketItem.cartId === payload
-          ? { ...bucketItem, ea: bucketItem.ea + 1 }
-          : bucketItem,
-      );
-    },
-    decreaseProductCount(state, { payload }) {
-      state.bucketList = state.bucketList.map((bucketItem) =>
-        bucketItem.cartId === payload
-          ? { ...bucketItem, ea: bucketItem.ea - 1 }
+        bucketItem.cartId === payload.id
+          ? { ...bucketItem, ea: payload.ea }
           : bucketItem,
       );
     },
@@ -51,7 +45,7 @@ export const {
   selectAllBucketItem,
   removeBucketItem,
   removeBucketItemSuccess,
-  incraeseProductCount,
-  decreaseProductCount,
+  updateBucketItemCount,
+  updateBucketItemCountSuccess,
 } = bucketSlice.actions;
 export default bucketSlice.reducer;

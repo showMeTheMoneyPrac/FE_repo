@@ -6,6 +6,8 @@ import {
   initBucketListSuccess,
   removeBucketItem,
   removeBucketItemSuccess,
+  updateBucketItemCount,
+  updateBucketItemCountSuccess,
 } from 'redux/modules/bucket';
 
 function* initBucketListSaga(action) {
@@ -27,9 +29,21 @@ function* removeBucketItemSaga(action) {
   }
 }
 
+function* updateBucketItemCountSaga(action) {
+  try {
+    const { data } = yield call(() =>
+      bucketAPI.updateBucketCountAPI(action.payload),
+    );
+    yield put(updateBucketItemCountSuccess(data));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function* bucketSaga() {
   yield takeLatest(initBucketList, initBucketListSaga);
   yield takeLatest(removeBucketItem, removeBucketItemSaga);
+  yield takeLatest(updateBucketItemCount, updateBucketItemCountSaga);
 }
 
 export default bucketSaga;
