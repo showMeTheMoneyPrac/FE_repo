@@ -49,8 +49,8 @@ const ProductSortModal = ({ visible }) => {
 
 const ProductSortList = styled.ul`
   position: absolute;
-  bottom: -9.5rem;
-  right: 3rem;
+  bottom: -12rem;
+  right: 0;
   display: ${({ visible }) => (visible ? 'flex' : 'none')};
   flex-direction: column;
   background-color: #fff;

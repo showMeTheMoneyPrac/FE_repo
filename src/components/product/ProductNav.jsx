@@ -63,6 +63,7 @@ const ProductNav = () => {
 };
 
 const ProductNavWrapper = styled.nav`
+  width: 20%;
   background-color: #fff;
   padding: 6rem 0;
   margin-right: 2rem;

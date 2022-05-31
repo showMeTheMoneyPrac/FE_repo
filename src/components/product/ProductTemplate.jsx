@@ -5,7 +5,6 @@ import ProductList from 'components/product/ProductList';
 import ProductNav from 'components/product/ProductNav';
 import ProductSortNav from 'components/product/ProductSortNav';
 import ScrollBtn from 'components/product/ScrollBtn';
-import Lodaing from 'components/product/Lodaing';
 
 const ProductTemplate = () => {
   return (
@@ -16,7 +15,6 @@ const ProductTemplate = () => {
         <RightWrapper>
           <ProductSortNav />
           <ProductList />
-          <Lodaing />
         </RightWrapper>
         <ScrollBtn />
       </ProductWrapper>
@@ -35,6 +33,7 @@ const ProductWrapper = styled.div`
 `;
 
 const RightWrapper = styled.div`
+  width: 80%;
   display: flex;
   flex-direction: column;
 `;

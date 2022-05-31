@@ -50,7 +50,7 @@ const SortNavWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem 2rem;
+  padding: 6rem 0 4rem 0;
   position: relative;
 `;
 
