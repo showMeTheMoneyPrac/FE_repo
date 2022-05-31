@@ -31,7 +31,7 @@ const bucketSlice = createSlice({
     updateBucketItemCountSuccess(state, { payload }) {
       state.bucketList = state.bucketList.map((bucketItem) =>
         bucketItem.cartId === payload.id
-          ? { ...bucketItem, ea: payload.ea }
+          ? { ...bucketItem, ea: payload.ea, bill: payload.bill }
           : bucketItem,
       );
     },
