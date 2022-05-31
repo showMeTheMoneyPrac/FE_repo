@@ -1,12 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useSearchQuery from 'hooks/useSearchQuery';
+import { useDispatch } from 'react-redux';
+import { initializeProductList } from 'redux/modules/product';
 
 const ProductNav = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const category = useSearchQuery('category');
   const search = useSearchQuery('search');
+
+  const handleProductCategoryRoute = (route) => {
+    dispatch(initializeProductList());
+    navigate(route);
+  };
 
   return (
     <>
@@ -14,44 +23,66 @@ const ProductNav = () => {
         <h2 className="nav-title">카테고리</h2>
         <ul className="nav-list">
           <li>
-            <StyledLink $current={!category} className="info-link" to="/">
+            <StyledLink
+              onClick={() => {
+                handleProductCategoryRoute('/');
+              }}
+              $current={!category}
+              className="info-link"
+            >
               전체
             </StyledLink>
           </li>
           <li>
             <StyledLink
+              onClick={() => {
+                handleProductCategoryRoute(
+                  `/product?category=상의${search ? `&search=${search}` : ''}`,
+                );
+              }}
               $current={category === '상의'}
               className="info-link"
-              to={`/product?category=상의${search ? `&search=${search}` : ''}`}
             >
               상의
             </StyledLink>
           </li>
           <li>
             <StyledLink
+              onClick={() => {
+                handleProductCategoryRoute(
+                  `/product?category=하의${search ? `&search=${search}` : ''}`,
+                );
+              }}
               $current={category === '하의'}
               className="purchase-link"
-              to={`/product?category=하의${search ? `&search=${search}` : ''}`}
             >
               하의
             </StyledLink>
           </li>
           <li>
             <StyledLink
+              onClick={() => {
+                handleProductCategoryRoute(
+                  `/product?category=신발${search ? `&search=${search}` : ''}`,
+                );
+              }}
               $current={category === '신발'}
               className="purchase-link"
-              to={`/product?category=신발${search ? `&search=${search}` : ''}`}
             >
               신발
             </StyledLink>
           </li>
           <li>
             <StyledLink
+              onClick={() => {
+                handleProductCategoryRoute(
+                  `/product?category=악세사리${
+                    search ? `&search=${search}` : ''
+                  }`,
+                );
+              }}
               $current={category === '악세사리'}
               className="purchase-link"
-              to={`/product?category=악세사리${
-                search ? `&search=${search}` : ''
-              }`}
             >
               악세사리
             </StyledLink>
@@ -80,7 +111,7 @@ const ProductNavWrapper = styled.nav`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.button`
   width: max-content;
   display: block;
   font-size: 1.8rem;

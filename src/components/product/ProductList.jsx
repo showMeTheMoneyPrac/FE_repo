@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import ProductItem from './ProductItem';
@@ -21,7 +21,6 @@ const ProductList = () => {
     page,
     isLoading,
   } = useSelector(({ product }) => product);
-
   useEffect(() => {
     const payload = {
       sort,
@@ -59,7 +58,7 @@ const ProductList = () => {
     }
 
     return () => observer.disconnect();
-  }, [target, isLoading]);
+  }, [target, isLoading, dispatch]);
 
   return (
     <>
