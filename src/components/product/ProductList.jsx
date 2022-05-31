@@ -1,18 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import ProductItem from './ProductItem';
 import useSearchQuery from 'hooks/useSearchQuery';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductList, initializeProductList } from 'redux/modules/product';
+import {
+  changePage,
+  fetchProductList,
+  initializeProductList,
+} from 'redux/modules/product';
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const sort = useSearchQuery('sort');
   const searchKeyword = useSearchQuery('search');
   const category = useSearchQuery('category');
-  const target = useRef();
-  const { productList: products, page } = useSelector(({ product }) => product);
+  const target = useRef(null);
+  const {
+    productList: products,
+    page,
+    isLoading,
+  } = useSelector(({ product }) => product);
 
   useEffect(() => {
     const payload = {
@@ -21,9 +29,11 @@ const ProductList = () => {
       category,
       page,
     };
+
     if (page === 0) {
       dispatch(initializeProductList());
     }
+
     dispatch(fetchProductList(payload));
   }, [dispatch, sort, searchKeyword, category, page]);
 
@@ -38,27 +48,32 @@ const ProductList = () => {
 
     const handleInsectionCallback = (entries) => {
       if (entries[0].isIntersecting) {
-        // dispatch(changePage());
-        observer.unobserve(targetEl);
+        dispatch(changePage());
       }
     };
 
     const observer = new IntersectionObserver(handleInsectionCallback, options);
 
-    if (targetEl) {
+    if (targetEl && !isLoading) {
       observer.observe(targetEl);
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [target, isLoading]);
 
   return (
     <>
       <ProductListWrapper>
-        {products.map((product, i) => (
-          <ProductItem key={i} product={product} />
-        ))}
-        <TargetWrapper ref={target}>{page}</TargetWrapper>
+        {products.map((product, i) =>
+          products.length - 1 === i ? (
+            <>
+              <ProductItem key={i} product={product} />
+              <div ref={target}></div>
+            </>
+          ) : (
+            <ProductItem key={i} product={product} />
+          ),
+        )}
       </ProductListWrapper>
     </>
   );
@@ -70,8 +85,4 @@ const ProductListWrapper = styled.ul`
   height: 90rem;
 `;
 
-const TargetWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
-`;
 export default ProductList;
