@@ -8,6 +8,14 @@ export const fetchPurchaseListAPI = () => {
   });
 };
 
+export const refundPurchaseAPI = (orderDetailId) => {
+  return client.delete(`/orders/${orderDetailId}`, {
+    headers: {
+      Authorization: localStorage.getItem('nickname'),
+    },
+  });
+};
+
 export const createReviewAPI = (orderDetailId, payload) => {
   return client.post(`/reviews/${orderDetailId}`, payload, {
     headers: {
