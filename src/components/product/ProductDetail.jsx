@@ -18,7 +18,7 @@ const ProductDetail = () => {
   const [count, setCount] = useState(0);
   const [option, setOption] = useState('');
   const userInfo = useSelector(({ user }) => user.userInfo);
-  console.log(product);
+
   useEffect(() => {
     if (localStorage.getItem('nickname')) dispatch(fetchUserInfo());
   }, [dispatch]);
@@ -92,7 +92,6 @@ const ProductDetail = () => {
       return;
     }
   };
-
   useEffect(() => {
     const getDeatail = async () => {
       const res = await fetchProductDetailAPI(productId);
@@ -190,9 +189,9 @@ const ProductDetail = () => {
           </ButtonWrapper>
         </ProductInfoWrapper>
       </ProductDetailWrapper>
-      {product?.reviewList.length && (
+      {product?.reviewList?.length ? (
         <ReviewList reviews={product.reviewList} />
-      )}
+      ) : null}
     </>
   );
 };
@@ -203,6 +202,7 @@ const ProductDetailWrapper = styled.section`
 `;
 
 const ProductInfoWrapper = styled.div`
+  flex: 6;
   display: flex;
   flex-direction: column;
   padding: 0 3rem;
@@ -237,6 +237,7 @@ const Price = styled.div`
 `;
 
 const ProductImgList = styled.ul`
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -255,7 +256,7 @@ const ProductImgItem = styled.li`
 `;
 
 const VisibleImgWrapper = styled.div`
-  width: 40%;
+  flex: 3;
   height: 50rem;
   .visible-img {
     width: 100%;
