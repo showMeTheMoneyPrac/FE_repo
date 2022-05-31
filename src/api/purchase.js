@@ -39,3 +39,11 @@ export const deleteReviewAPI = (reviewId) => {
     },
   });
 };
+
+export const purchaseNowAPI = ({ productId, payload }) => {
+  return client.post(`/orders/${productId}`, payload, {
+    headers: {
+      Authorization: localStorage.getItem('nickname'),
+    },
+  });
+};

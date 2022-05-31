@@ -73,7 +73,7 @@ const HeaderWrapper = styled.header`
   height: 150px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 4px 4px rgba(26, 31, 22, 0.15);
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   position: fixed;
   top: 0;
