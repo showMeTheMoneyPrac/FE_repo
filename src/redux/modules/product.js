@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isLoading: false,
+  isLastPage: false,
   productList: [],
   page: 0,
 };
@@ -16,7 +17,8 @@ const productSlice = createSlice({
     },
     fetchProductListSuccess(state, { payload }) {
       state.isLoading = false;
-      state.productList = [...state.productList, ...payload];
+      state.productList = [...state.productList, ...payload.productLists];
+      state.isLastPage = payload.isLastPage;
     },
     changePage(state) {
       state.page = state.page + 1;

@@ -20,7 +20,9 @@ const ProductList = () => {
     productList: products,
     page,
     isLoading,
+    isLastPage,
   } = useSelector(({ product }) => product);
+
   useEffect(() => {
     const payload = {
       sort,
@@ -53,12 +55,12 @@ const ProductList = () => {
 
     const observer = new IntersectionObserver(handleInsectionCallback, options);
 
-    if (targetEl && !isLoading) {
+    if (targetEl && !isLoading && !isLastPage) {
       observer.observe(targetEl);
     }
 
     return () => observer.disconnect();
-  }, [target, isLoading, dispatch]);
+  }, [target, isLoading, isLastPage, dispatch]);
 
   return (
     <>
