@@ -3,17 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useSearchQuery from 'hooks/useSearchQuery';
-import { useDispatch } from 'react-redux';
-import { initializeProductList } from 'redux/modules/product';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductList, initializeProductList } from 'redux/modules/product';
 
 const ProductNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const category = useSearchQuery('category');
   const search = useSearchQuery('search');
+  const sort = useSearchQuery('sort');
+  const page = useSelector(({ product }) => product.page);
 
   const handleProductCategoryRoute = (route) => {
+    const payload = {
+      sort,
+      searchKeyWord: search,
+      category,
+      page,
+    };
     dispatch(initializeProductList());
+    dispatch(fetchProductList(payload));
     navigate(route);
   };
 
@@ -76,12 +85,12 @@ const ProductNav = () => {
             <StyledLink
               onClick={() => {
                 handleProductCategoryRoute(
-                  `/product?category=악세사리${
+                  `/product?category=악세서리${
                     search ? `&search=${search}` : ''
                   }`,
                 );
               }}
-              $current={category === '악세사리'}
+              $current={category === '악세서리'}
               className="purchase-link"
             >
               악세사리

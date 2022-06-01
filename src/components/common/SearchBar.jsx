@@ -1,12 +1,17 @@
 import useSearchQuery from 'hooks/useSearchQuery';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { fetchProductList, initializeProductList } from 'redux/modules/product';
 import styled from 'styled-components';
 
 const SearchBar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [searchKeyWord, setSearchKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
   const category = useSearchQuery('category');
+  const sort = useSearchQuery('sort');
+  const page = useSelector(({ product }) => product.page);
 
   const handleChangeSearchKeyword = (e) => {
     setSearchKeyword(e.target.value);
@@ -14,10 +19,18 @@ const SearchBar = () => {
 
   const handleRouteSearchList = (e) => {
     e.preventDefault();
+    const payload = {
+      sort,
+      searchKeyword,
+      category,
+      page,
+    };
+    dispatch(initializeProductList());
+    dispatch(fetchProductList(payload));
     navigate(
       `/product?${
         category ? `category=${category}&` : ''
-      }search=${searchKeyWord}`,
+      }search=${searchKeyword}`,
     );
   };
 
