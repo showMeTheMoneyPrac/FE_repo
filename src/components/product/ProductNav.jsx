@@ -76,12 +76,12 @@ const ProductNav = () => {
             <StyledLink
               onClick={() => {
                 handleProductCategoryRoute(
-                  `/product?category=악세사리${
+                  `/product?category=악세서리${
                     search ? `&search=${search}` : ''
                   }`,
                 );
               }}
-              $current={category === '악세사리'}
+              $current={category === '악세서리'}
               className="purchase-link"
             >
               악세사리
